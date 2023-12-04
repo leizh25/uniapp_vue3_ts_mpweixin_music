@@ -1,0 +1,30 @@
+const http = require('http')
+const fs = require('fs')
+
+const cookie =
+  'MUSIC_A_T=1602658479920; Max-Age=2147483647; Expires=Fri, 14 Dec 2091 11:19:54 GMT; Path=/eapi/clientlog;;MUSIC_A_T=1602658479920; Max-Age=2147483647; Expires=Fri, 14 Dec 2091 11:19:54 GMT; Path=/wapi/clientlog;;MUSIC_A_T=1602658479920; Max-Age=2147483647; Expires=Fri, 14 Dec 2091 11:19:54 GMT; Path=/weapi/clientlog;;__csrf=d4b70354795a620fe8f63f71c8788b85; Max-Age=1296010; Expires=Mon, 11 Dec 2023 08:05:57 GMT; Path=/;;MUSIC_A_T=1602658479920; Max-Age=2147483647; Expires=Fri, 14 Dec 2091 11:19:54 GMT; Path=/neapi/clientlog;;MUSIC_R_T=1602658512497; Max-Age=2147483647; Expires=Fri, 14 Dec 2091 11:19:54 GMT; Path=/weapi/clientlog;;MUSIC_R_T=1602658512497; Max-Age=2147483647; Expires=Fri, 14 Dec 2091 11:19:54 GMT; Path=/eapi/clientlog;;MUSIC_A_T=1602658479920; Max-Age=2147483647; Expires=Fri, 14 Dec 2091 11:19:54 GMT; Path=/api/clientlog;;MUSIC_R_T=1602658512497; Max-Age=2147483647; Expires=Fri, 14 Dec 2091 11:19:54 GMT; Path=/eapi/feedback;;MUSIC_R_T=1602658512497; Max-Age=2147483647; Expires=Fri, 14 Dec 2091 11:19:54 GMT; Path=/wapi/feedback;;MUSIC_A_T=1602658479920; Max-Age=2147483647; Expires=Fri, 14 Dec 2091 11:19:54 GMT; Path=/eapi/feedback;;MUSIC_U=0070EEDFB55478110E9894F342C55B13A5F5EC048B3D0D12E77E17D32139ECD11B2C66414311C4E14838E88BDF39CC38107167F3404EF830C8549856427F008EF95A8A0BEECAE92F4774631F991107BAC235469F8E0376C7B8AF4D607174003EFC623B7D9A70AA60DE1E2A99B1C733752E81D45DFFEA4E261FAB6797C26F67AB016B8926FC9678428FBDC5130AB3E089AB3A2A3B56DFBE34E6C82BFAE22AAC39A3BC21E807BE4215D18BB572E7C3065C43319DEB070AFC409E920332C39D771F56A9A81AB3928166159C506C93866E86D30227B769E3B103983936BF2175A45B9FD6C381248C9024B2E3DC1E87995455BDA365B1D69C7C850AB91B34C65CFDAE7A4AB846F451D5EBDE5B848DE81A63D377AAC7A70C60CF32FDF0AA52DF2E233561FF802DBD76EE56C76F1EF94C902ECBACDE9D95FD3458F63FADC0FD1C05EB5B1DFBC333B2DB10BD1D4139E205A9B6B01B; Max-Age=2147483647; Expires=Fri, 14 Dec 2091 11:19:54 GMT; Path=/;;MUSIC_SNS=; Max-Age=0; Expires=Sun, 26 Nov 2023 08:05:47 GMT; Path=/;MUSIC_A_T=1602658479920; Max-Age=2147483647; Expires=Fri, 14 Dec 2091 11:19:54 GMT; Path=/wapi/feedback;;MUSIC_A_T=1602658479920; Max-Age=2147483647; Expires=Fri, 14 Dec 2091 11:19:54 GMT; Path=/openapi/clientlog;;MUSIC_R_T=1602658512497; Max-Age=2147483647; Expires=Fri, 14 Dec 2091 11:19:54 GMT; Path=/weapi/feedback;;MUSIC_R_T=1602658512497; Max-Age=2147483647; Expires=Fri, 14 Dec 2091 11:19:54 GMT; Path=/wapi/clientlog;;MUSIC_R_T=1602658512497; Max-Age=2147483647; Expires=Fri, 14 Dec 2091 11:19:54 GMT; Path=/neapi/clientlog;;MUSIC_A_T=1602658479920; Max-Age=2147483647; Expires=Fri, 14 Dec 2091 11:19:54 GMT; Path=/api/feedback;;MUSIC_R_T=1602658512497; Max-Age=2147483647; Expires=Fri, 14 Dec 2091 11:19:54 GMT; Path=/api/feedback;;MUSIC_A_T=1602658479920; Max-Age=2147483647; Expires=Fri, 14 Dec 2091 11:19:54 GMT; Path=/weapi/feedback;;MUSIC_R_T=1602658512497; Max-Age=2147483647; Expires=Fri, 14 Dec 2091 11:19:54 GMT; Path=/openapi/clientlog;;__remember_me=true; Max-Age=2147483647; Expires=Fri, 14 Dec 2091 11:19:54 GMT; Path=/;;MUSIC_R_T=1602658512497; Max-Age=2147483647; Expires=Fri, 14 Dec 2091 11:19:54 GMT; Path=/api/clientlog;;MUSIC_A_T=1602658479920; Max-Age=2147483647; Expires=Fri, 14 Dec 2091 11:19:54 GMT; Path=/neapi/feedback;;MUSIC_R_T=1602658512497; Max-Age=2147483647; Expires=Fri, 14 Dec 2091 11:19:54 GMT; Path=/neapi/feedback;;NMTID=00OLNaX1zVhPmeP7kibiEMymVG0YH8AAAGMCqnHVQ; Max-Age=315360000; Expires=Wed, 23 Nov 2033 08:05:47 GMT; Path=/;'
+
+http.get(
+  {
+    hostname: 'azzz.fun',
+    port: 8163,
+    path: '/homepage/block/page',
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/json',
+      //   cookie,
+    },
+    searchParams: {
+      cookie,
+    },
+  },
+  (res) => {
+    //   console.log(res.statusCode)
+    //   console.log(res.headers)
+    res.on('data', (data) => {
+      console.log(data.toString())
+      // fs.writeFileSync('mock1.json', data)
+      fs.appendFileSync('mock1.json', data.toString())
+    })
+  },
+)

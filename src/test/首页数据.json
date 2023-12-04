@@ -1,0 +1,819 @@
+{
+  "code": 200,
+  "data": {
+    "cursor": null,
+    "blocks": [
+        // 1. 首页轮播图   基础
+      {
+        "blockCode": "HOMEPAGE_BANNER",
+        "showType": "BANNER",
+        "dislikeShowType": 0,
+        "extInfo": {
+          "banners": [
+            // 10张图片
+            {
+              "pic": "http://p1.music.126.net/rze_src-2IPTnqxcs8rTYw==/109951169096513915.jpg",
+              "titleColor": "red",
+              "typeTitle": "新歌首发",
+              "song": {
+                "name": "海阔天空",
+                "id": 2102012051,
+                "ar": [{ "id": 7763, "name": "G.E.M.邓紫棋", "tns": [], "alias": [] }],
+                "alia": [],
+                "pop": 100,
+                "fee": 8,
+                "al": { "id": 174925713, "name": "T.I.M.E.", "picUrl": "http://p2.music.126.net/aJWtwvdYRXvKUpAE2C6NoA==/109951168919708423.jpg", "tns": [], "pic_str": "109951168919708423", "pic": 109951168919708420 },
+                "dt": 266780,
+                "originSongSimpleData": { "songId": 346089, "name": "海阔天空", "artists": [{ "id": 11127, "name": "Beyond" }], "albumMeta": { "id": 34110, "name": "Beyond 25th Anniversary" } },
+                "single": 0,
+                "publishTime": 1699718400000,
+              },
+              "bannerId": "1700999294009889",
+            },
+
+          ]
+        },
+      },
+    //   2. 横向滚动按钮 (每日推荐 | 歌单 | 私人FM | 歌单 | 排行榜 ....)
+      {
+        "blockCode": "HOMEPAGE_BLOCK_OLD_DRAGON_BALL",
+        "showType": "DRAGON_BALL",
+        "creatives": [
+          {
+            "creativeType": "DRAGON_BALL",
+            "resources": [
+              // 8个按钮
+              {
+                "uiElement": {
+                  "mainTitle": { "title": "每日推荐", "canShowTitleLogo": false },
+                  "image": { "action": "", "title": "", "imageUrl": "http://p1.music.126.net/4DpSgAVpJny4Ewf-Xw_WQQ==/109951163986641971.jpg", "imageUrl2": "https://p6.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/15074828847/1c67/082a/54e3/dd432e2fccc93167a319a297b9c2bcb0.png", "purePicture": false },
+                  "rcmdShowType": "DEFAULT"
+                },
+                "resourceType": "dragon_ball",
+              }
+
+            ],
+          }
+        ],
+      },
+    //   3. 推荐歌单 方块左右滑动栏  基础
+      {
+        "blockCode": "HOMEPAGE_BLOCK_PLAYLIST_RCMD",
+        "showType": "HOMEPAGE_SLIDE_PLAYLIST",
+        "uiElement": { 
+          "subTitle": {
+             "title": "推荐歌单",
+              },                  },
+        "creatives": [
+            // 第一个对象是动态上下切换图片
+          {
+            "creativeType": "scroll_playlist",
+            "creativeId": "8790944107",
+            "action": "orpheus://nm/playlist/flow?source=HOMEPAGE_BLOCK_PLAYLIST_RCMD&bizData=[{\"resourceId\":\"8790944107\",\"alg\":\"complete_list_rt_swing\",\"reason\":null},{\"resourceId\":\"966944105\",\"alg\":\"complete_list_rt_swing\",\"reason\":null},{\"resourceId\":\"7587518000\",\"alg\":\"bysong_red_ol\",\"reason\":null}]&snap=true&referLog=HOMEPAGE_BLOCK_PLAYLIST_RCMD",
+            "uiElement": {
+              "mainTitle": { "title": "「独处时光」自由/舒适/松弛感/放空", "canShowTitleLogo": false },
+              "subTitle": { "title": "", "canShowTitleLogo": false },
+              "image": { "imageUrl": "http://p1.music.126.net/mCjDD_hYZfFeMd5y8vswaA==/109951169017122435.jpg", "purePicture": false },
+              "labelTexts": ["华语", "流行", "安静"],
+              "rcmdShowType": "DEFAULT"
+            },
+            "resources": [
+              // 3个资源
+              {
+                "uiElement": {
+                  "mainTitle": { "title": "「独处时光」自由/舒适/松弛感/放空", "canShowTitleLogo": false },
+                  "image": { "imageUrl": "http://p1.music.126.net/mCjDD_hYZfFeMd5y8vswaA==/109951169017122435.jpg", "purePicture": false },
+                  "labelTexts": ["华语", "流行", "安静"],
+                  "rcmdShowType": "DEFAULT"
+                },
+                "resourceType": "list",
+                "resourceId": "8790944107",
+                "resourceExtInfo": { "playCount": 43645, "highQuality": false, "hasListened": false, "specialType": 0 },
+                "action": "orpheus://nm/playlist/flow?source=HOMEPAGE_BLOCK_PLAYLIST_RCMD&bizData=[{\"resourceId\":\"8790944107\",\"alg\":\"complete_list_rt_swing\",\"reason\":null},{\"resourceId\":\"966944105\",\"alg\":\"complete_list_rt_swing\",\"reason\":null},{\"resourceId\":\"7587518000\",\"alg\":\"bysong_red_ol\",\"reason\":null}]&snap=true&referLog=HOMEPAGE_BLOCK_PLAYLIST_RCMD",
+              },
+             
+            ],
+          },
+        //   从这开始是真正的推荐歌单横向列表数据   5个卡片
+          {
+            "creativeType": "list",
+            "creativeId": "3136952023",//歌单ID
+            "uiElement": {
+              "mainTitle": { "title": "今天从《I Never Learned》听起|私人雷达", "canShowTitleLogo": false },
+              "image": { "imageUrl": "http://p2.music.126.net/kiA8vYoYXmHUIHlliu5Qxg==/109951165496139081.jpg", "purePicture": false },
+            },
+            "resources": [
+              {
+                "uiElement": {
+                  "mainTitle": { "title": "今天从《I Never Learned》听起|私人雷达", "canShowTitleLogo": false },
+                  "image": { "imageUrl": "http://p2.music.126.net/kiA8vYoYXmHUIHlliu5Qxg==/109951165496139081.jpg", "purePicture": false },
+                  "rcmdShowType": "DEFAULT"
+                },
+                "resourceType": "list",
+                "resourceId": "3136952023",
+                "resourceExtInfo": { "playCount": 17458010112, "highQuality": false, "hasListened": false, "specialType": 100 },
+              }
+            ],
+          },
+
+        ],
+      },
+    //   4. 系统推荐(带旋转刷新按钮那一栏)  四个左右滑块,每个滑块里面三首音乐    基础
+      {
+        "blockCode": "HOMEPAGE_BLOCK_STYLE_RCMD",
+        "showType": "HOMEPAGE_SLIDE_SONGLIST_ALIGN",
+        "uiElement": { "subTitle": { "title": "远方和诗 我和民谣", "canShowTitleLogo": false }, "button": { "action": "play_all_song", "actionType": "client_customized", "text": "播放", "iconUrl": null, "biData": null }, "rcmdShowType": "DEFAULT" },
+        "creatives": [
+          // 4个滑块
+          {
+            "creativeType": "SONG_LIST_HOMEPAGE",
+            "resources": [
+              // 三首歌
+              {
+                "uiElement": {
+                  "mainTitle": { "title": "关于我爱你", "canShowTitleLogo": false },
+                  "subTitle": { "title": "百万红心", "canShowTitleLogo": false, "titleId": "title_10006", "titleType": "songRcmdTag" },
+                  "image": { "imageUrl": "http://p1.music.126.net/WMVdcUdA0XYzdj9Od4upyw==/109951167282574636.jpg", "purePicture": false },
+                },
+                "resourceType": "song",
+                "resourceId": "326705",
+                "resourceExtInfo": {
+                  "artists": [{ "name": "张悬", "id": 10557, "picId": 0, "img1v1Id": 0, "briefDesc": "", "picUrl": "", "img1v1Url": "http://p1.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg", "albumSize": 0, "alias": [], "trans": "", "musicSize": 0, "topicPerson": 0 }],
+                  "song": {
+                    "name": "关于我爱你",
+                    "id": 326705,
+                    "ar": [{ "id": 10557, "name": "张悬", "tns": [], "alias": [] }],
+                    "pop": 100,
+                    "fee": 1,
+                    "v": 44,
+                    "al": { "id": 32312, "name": "城市", "picUrl": "http://p1.music.126.net/WMVdcUdA0XYzdj9Od4upyw==/109951167282574636.jpg", "tns": [], "pic_str": "109951167282574636", "pic": 109951167282574640 },
+                    "dt": 295467,
+                    "publishTime": 1412611200000,
+                    "videoInfo": { "moreThanOne": false, "video": { "vid": "479076", "type": 0, "title": "关于我爱你", "playTime": 772868, "coverUrl": "http://p1.music.126.net/IXe-cf-uPpkj0nDOk4FmdQ==/3375500698182472.jpg", "publishTime": 1258992000007, "artists": null, "alias": null } }
+                  },
+                  "songData": {
+                    "name": "关于我爱你",
+                    "id": 326705,
+                    "status": 0,
+                    "fee": 1,
+                    "copyrightId": 7001,
+                    "artists": [{ "name": "张悬", "id": 10557, "picId": 0, "img1v1Id": 0, "briefDesc": "", "picUrl": "", "img1v1Url": "http://p1.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg", "albumSize": 0, "alias": [], "trans": "", "musicSize": 0, "topicPerson": 0 }],
+                    "album": {
+                      "name": "城市",
+                      "id": 32312,
+                      "type": "专辑",
+                      "size": 10,
+                      "picId": 109951167282574640,
+                      "blurPicUrl": "http://p1.music.126.net/WMVdcUdA0XYzdj9Od4upyw==/109951167282574636.jpg",
+                      "companyId": 0,
+                      "pic": 109951167282574640,
+                      "picUrl": "http://p1.music.126.net/WMVdcUdA0XYzdj9Od4upyw==/109951167282574636.jpg",
+                      "publishTime": 1242921600000,
+                      "company": "索尼音乐",
+                      "artist": { "name": "", "id": 0, "picId": 0, "img1v1Id": 0, "briefDesc": "", "picUrl": "", "img1v1Url": "http://p1.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg", "albumSize": 0, "alias": [], "trans": "", "musicSize": 0, "topicPerson": 0 },
+                      "artists": [{ "name": "张悬", "id": 10557, "picId": 0, "img1v1Id": 0, "briefDesc": "", "picUrl": "", "img1v1Url": "http://p1.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg", "albumSize": 0, "alias": [], "trans": "", "musicSize": 0, "topicPerson": 0 }],
+                      "subType": "录音室版",
+                      "picId_str": "109951167282574636"
+                    },
+                    "popularity": 100,
+                    "score": 100,
+                    "duration": 295467,
+                    "bMusic": { "name": null, "id": 8169486907, "size": 4728416, "extension": "mp3", "sr": 44100, "dfsId": 0, "bitrate": 128000, "playTime": 295467, "volumeDelta": -12021 },
+                    "hMusic": { "name": null, "id": 8169486902, "size": 11820974, "extension": "mp3", "sr": 44100, "dfsId": 0, "bitrate": 320000, "playTime": 295467, "volumeDelta": -16283 },
+                    "mMusic": { "name": null, "id": 8169486905, "size": 7092602, "extension": "mp3", "sr": 44100, "dfsId": 0, "bitrate": 192000, "playTime": 295467, "volumeDelta": -13685 },
+                    "mvid": 479076,
+                    "lMusic": { "name": null, "id": 8169486907, "size": 4728416, "extension": "mp3", "sr": 44100, "dfsId": 0, "bitrate": 128000, "playTime": 295467, "volumeDelta": -12021 }
+                  },
+                  "songPrivilege": {
+                    "id": 326705,
+                    "fee": 1,
+                    "payed": 3,
+                  }
+                },
+                "action": "play_all_song_from_current_index",
+                "actionType": "client_customized",
+              },
+
+            ],
+          },
+
+        ],
+        "resourceIdList": ["326705", "386837", "569200211", "517902790", "422428548", "28310921", "513357239", "2014967693", "447926067", "28257524", "421423806", "133998"],
+      },
+      // 5. 新歌新碟 \ 数字专辑 (8个左右滑块,每个滑块里面3首歌曲 )
+      {
+        "blockCode": "HOMEPAGE_BLOCK_NEW_ALBUM_NEW_SONG",
+        "showType": "HOMEPAGE_NEW_SONG_NEW_ALBUM",
+        "dislikeShowType": 0,
+        "uiElement": {
+          "subTitle": { "title": "新歌新碟", "canShowTitleLogo": false },
+        },
+        "creatives": [
+          // 8个左右滑块
+          {
+            "creativeType": "NEW_SONG_HOMEPAGE",
+            "uiElement": {
+              "mainTitle": { "title": "新歌", "canShowTitleLogo": false },
+            },
+            "resources": [
+              // 三首歌
+              {
+                "uiElement": {
+                  "mainTitle": { "title": "萍聚", "canShowTitleLogo": false },
+                  "subTitle": { "title": "影视剧《欢迎来到麦乐村》插曲", "canShowTitleLogo": false, "rcmdText": "影视剧《欢迎来到麦乐村》插曲" },
+                  "image": { "imageUrl": "http://p1.music.126.net/g_TtkUeRzbiKavO4Jh7Rrg==/109951169067766219.jpg", "purePicture": false },
+                  "rcmdShowType": "DEFAULT"
+                },
+                // "resourceType": "album",
+ √               "resourceType": "song",
+                "resourceId": "2101425249",
+                "resourceExtInfo": {
+                  "artists": [{ "name": "刘敏涛", "id": 29738620, "picId": 0, "img1v1Id": 0, "briefDesc": "", "picUrl": "", "img1v1Url": "http://p1.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg", "albumSize": 0, "alias": [], "trans": "", "musicSize": 0, "topicPerson": 0 }],
+                  "alias": "[\"影视剧《欢迎来到麦乐村》插曲\"]",
+                  "songData": {  //resourceType为song才有songData
+                    "name": "萍聚",
+                    "id": 2101425249,
+                    "alias": ["影视剧《欢迎来到麦乐村》插曲"],
+                    "fee": 8,
+                    "artists": [{ "name": "刘敏涛", "id": 29738620, "picId": 0, "img1v1Id": 0, "briefDesc": "", "picUrl": "", "img1v1Url": "http://p1.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg", "albumSize": 0, "alias": [], "trans": "", "musicSize": 0, "topicPerson": 0 }],
+                    "album": {
+                      "name": "萍聚",
+                      "id": 179422848,
+                      "picId": 109951169067766220,
+                      "blurPicUrl": "http://p1.music.126.net/g_TtkUeRzbiKavO4Jh7Rrg==/109951169067766219.jpg",
+                      "picUrl": "http://p1.music.126.net/g_TtkUeRzbiKavO4Jh7Rrg==/109951169067766219.jpg",
+                      "publishTime": 1701014400000,
+                      "company": "北京玩爆文化传播有限公司",
+                      "artist": { "name": "", "id": 0, "picId": 0, "img1v1Id": 0, "briefDesc": "", "picUrl": "", "img1v1Url": "http://p1.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg", "albumSize": 0, "alias": [], "trans": "", "musicSize": 0, "topicPerson": 0 },
+                      "alias": ["影视剧《欢迎来到麦乐村》插曲"],
+                      "artists": [{ "name": "刘敏涛", "id": 29738620, "picId": 0, "img1v1Id": 0, "briefDesc": "", "picUrl": "", "img1v1Url": "http://p1.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg", "albumSize": 0, "alias": [], "trans": "", "musicSize": 0, "topicPerson": 0 }],
+                    },
+                    "sqMusic": { "name": null, "id": 8595757074, "size": 22191107, "extension": "flac", "sr": 48000, "dfsId": 0, "bitrate": 882496, "playTime": 201166, "volumeDelta": -16826 },
+                    "hrMusic": { "name": null, "id": 8595757071, "size": 41487075, "extension": "flac", "sr": 48000, "dfsId": 0, "bitrate": 1649858, "playTime": 201166, "volumeDelta": -16238 },
+                    "originSongSimpleData": {
+                      "songId": 259541,
+                      "name": "萍聚",
+                      "artists": [
+                        { "id": 8353, "name": "李翊君" },
+                        { "id": 4410, "name": "李富兴" }
+                      ],
+                      "albumMeta": { "id": 25852, "name": "萍聚/珍重再见" }
+                    },
+                    "bMusic": { "name": null, "id": 8595757069, "size": 3219501, "extension": "mp3", "sr": 48000, "dfsId": 0, "bitrate": 128000, "playTime": 201166, "volumeDelta": -11884 },
+                    "hMusic": { "name": null, "id": 8595757065, "size": 8048685, "extension": "mp3", "sr": 48000, "dfsId": 0, "bitrate": 320000, "playTime": 201166, "volumeDelta": -16244 },
+                    "mMusic": { "name": null, "id": 8595757070, "size": 4829229, "extension": "mp3", "sr": 48000, "dfsId": 0, "bitrate": 192000, "playTime": 201166, "volumeDelta": -13621 },
+                    "mvid": 0,
+                    "lMusic": { "name": null, "id": 8595757069, "size": 3219501, "extension": "mp3", "sr": 48000, "dfsId": 0, "bitrate": 128000, "playTime": 201166, "volumeDelta": -11884 }
+                  },
+                  "songPrivilege": {
+                    "id": 2101425249,
+                    "fee": 8,
+                    "payed": 3,
+                  }
+                },
+              },
+
+            ],
+          },
+
+        ],
+      },
+    //   6. 热门话题 (左右滑块)   分两组  每组3个卡片    一共6个卡片  展示在一行 左右滑动  
+      {
+        "blockCode": "HOMEPAGE_BLOCK_HOT_TOPIC",
+        "showType": "HOT_TOPIC",
+        "uiElement": { "subTitle": { "title": "热门话题", "canShowTitleLogo": false }, "rcmdShowType": "DEFAULT" },
+        "creatives": [
+          // 两组（两对象） 每组3个卡片 
+          {
+            "creativeType": "topic",
+            "creativeId": "148676335",
+            "resources": [
+              // 三个卡片
+              {
+                "uiElement": {
+                  "mainTitle": { "title": "回忆就像一把刀", "canShowTitleLogo": false, "titleImgUrl": "https://p6.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/17171747083/3d1f/1f07/3501/44e35cda121d13cb161064c331e14d1b.png" },
+                  "subTitle": { "title": "25万热度", "canShowTitleLogo": false },
+                  "image": { "imageUrl": "http://p1.music.126.net/skzrb8WcuF-yvffCvkQzQw==/109951168881274239.jpg", "purePicture": false },
+                },
+                "resourceType": "event_topic",
+                "resourceId": "148676335",
+                "resourceExtInfo": {
+                  "user": {
+                    "userId": 6270463104,
+                    "nickname": "南风知意_10YH",
+                    "avatarUrl": "http://p2.music.126.net/Li2onQtLhkHN0z3BkcZHaA==/109951169019520820.jpg",
+                    "backgroundUrl": "http://p1.music.126.net/_f8R60U9mZ42sSNvdPn2sQ==/109951162868126486.jpg",
+                    "createTime": 1634308127987,
+                    "userName": "1_15881048910",
+                    "accountType": 1,
+                    "shortUserName": "15881048910",
+                    "gender": 2,
+                    "province": 510000,
+                    "city": 510100,
+                    "vipType": 0,
+                    "lastLoginTime": 1700809223138,
+                  },
+                  "eventMsg": "十年了，十年了，都是我不好，把你弄丢了，都是我的错，距离很近，却未曾见过面。。。",
+                },
+              },
+
+            ],
+            "position": 0
+          },
+     
+        ],
+      },
+    //   7. 音乐日历  （样式已截图）
+      {
+        "blockCode": "HOMEPAGE_MUSIC_CALENDAR",
+        "showType": "SHUFFLE_MUSIC_CALENDAR",
+        "uiElement": { "subTitle": { 
+          "title": "音乐日历", "canShowTitleLogo": false },
+           "button": { "action": "orpheus://nm/musicCalendar/detail?eventRefer=recommendpersonal", 
+           "actionType": "orpheus", "text": "今日4条", "iconUrl": null, "biData": null }, 
+           "rcmdShowType": "DEFAULT" },
+        "creatives": [
+          // 两条数据
+          {
+            "creativeType": "HOMEPAGE_MUSIC_EVENT",
+            "creativeId": "artistPublishEvent_9939_29545116",
+            "code": "HOMEPAGE_MUSIC_CALENDAR",
+            "resources": [
+              {
+                "uiElement": { "mainTitle": { "title": "弦子的MV：庸人自扰",
+                 "canShowTitleLogo": false }, 
+                 "image": {
+                   "imageUrl": "http://p1.music.126.net/w2MMutJWfWufRm229TWmuQ==/109951169083747377.jpg",
+                    "purePicture": false }, "rcmdShowType": "DEFAULT" },
+                "resourceType": "MV",
+                "resourceId": "14679510",
+                "resourceUrl": "orpheus://mv/14679510",
+                "action": "orpheus://nm/musicCalendar/detail?date=1701054045000&eventID=artistPublishEvent_9939_29545116&eventRefer=recommendpersonal",
+              }
+            ],
+          },
+      
+        ],
+      },
+    //   8. 精选音乐视频
+      {
+        "blockCode": "HOMEPAGE_MUSIC_MLOG",
+        "showType": "HOMEPAGE_SLIDE_PLAYABLE_MLOG",
+        "uiElement": {
+          "subTitle": { 
+            "title": "精选音乐视频", 
+             "titleImgUrl": "http://p1.music.126.net/9DENf1h3A5tc0u1d6OUPEA==/109951165393408736.jpg" 
+            },
+          "button": { 
+            "action": "orpheus://nm/MLog/feedSquare?referLog=HOMEPAGE_MUSIC_MLOG",
+             "text": "换一批",
+            },
+          "rcmdShowType": "DEFAULT"
+        },
+        "extInfo": [
+          // 5条数据
+          {
+            "id": "a1Grv0k5ouk4R46",
+            "type": 1,
+            "mlogBaseDataType": 2,
+            "resource": {
+              "mlogBaseData": {
+                "id": "a1Grv0k5ouk4R46",
+                "type": 2,
+                "originalTitle": "手风琴演绎红色经典！带您回忆那个火红的年代！",
+                "text": "手风琴演绎红色经典！带您回忆那个火红的年代！",
+                "desc": "手风琴演绎红色经典！带您回忆那个火红的年代！",
+                "pubTime": 1623161855553,
+                "coverUrl": "http://p6.music.126.net/4D-mBVsrbVhqlR1RaxjErg==/109951166069194910",
+                "coverDetail": {
+                  "verticalCoverImage": { "width": 810, "height": 1080, "imageUrl": "http://p6.music.126.net/4D-mBVsrbVhqlR1RaxjErg==/109951166069194910" },
+                  "horizontalCoverImage": { "width": null, "height": null, "imageUrl": "http://p6.music.126.net/0xawrnRcyGIDpl9ScpI47Q==/109951166737922621" }
+                },
+                "coverHeight": 1080,
+                "coverWidth": 1920,
+                "coverColor": -6786761,
+                "coverPicKey": "9330578630",
+                "threadId": "R_MLOG_1001_a1Grv0k5ouk4R46",
+                "duration": 177744,
+                "video": {
+                  "videoKey": "9328447086",
+                  "duration": 177744,
+                  "coverUrl": "http://p6.music.126.net/4D-mBVsrbVhqlR1RaxjErg==/109951166069194910",
+                  "frameUrl": "http://p6.music.126.net/obj/w5nDkMOCwrDCmDDDi8Om/9330614668/ca9b/d9f7/d0ce/MUSICcb4133b580ef18c8a97c6125c9958948.jpg",
+                  "frameImage": { "picKey": "9330614668", "imageUrl": "http://p6.music.126.net/obj/w5nDkMOCwrDCmDDDi8Om/9330614668/ca9b/d9f7/d0ce/MUSICcb4133b580ef18c8a97c6125c9958948.jpg", "width": 1920, "height": 1080 },
+                  "width": 1920,
+                  "height": 1080,
+                  "coverDetail": {
+                    "verticalCoverImage": { "picKey": "9330578630", "imageUrl": "http://p6.music.126.net/4D-mBVsrbVhqlR1RaxjErg==/109951166069194910", "width": 810, "height": 1080 },
+                    "horizontalCoverImage": { "picKey": "109951166737922621", "imageUrl": "http://p6.music.126.net/0xawrnRcyGIDpl9ScpI47Q==/109951166737922621", "width": null, "height": null }
+                  }
+                },
+              },
+              "mlogExtVO": {
+                "likedCount": 66,
+                "commentCount": 4,
+                "playCount": 17921,
+                "videoStartPlayTime": 0,
+                "collectReason": "该视频没有配乐，不可添加到视频歌单",
+              },
+              "userProfile": {
+                "userId": 1295715421,
+                "nickname": "刘宽音乐工厂",
+                "avatarUrl": "http://p2.music.126.net/e3jFY2jHQCVDWMNkaNHqHQ==/109951163865787820.jpg",
+                "avatarDetail": { "userType": 204, "identityLevel": 3, "identityIconUrl": "https://p5.music.126.net/obj/wo3DlcOGw6DClTvDisK1/4761340168/ccce/35dd/ab2d/1a7c8ee0f6bb1fc2760cbb570dfee34f.png" }
+              },
+              "status": 1,
+              "source": 5,
+              "shareUrl": "https://st.music.163.com/mlog/mlog.html?id=a1Grv0k5ouk4R46&type=2&userid=1295715421&songId=null&startTime=null",
+            },
+          },
+
+        ],
+      },
+    //   9.雷达歌单(类似上面推荐歌单的方形左右滑动栏)  基础
+      {
+        "blockCode": "HOMEPAGE_BLOCK_MGC_PLAYLIST",
+        "showType": "HOMEPAGE_SLIDE_PLAYLIST",
+        "uiElement": {
+          "subTitle": { "title": "网易云音乐的雷达歌单", "canShowTitleLogo": false },
+          "button": {
+             "action": "orpheus://playlistCollection?tabPage=1&categoryName=官方&referLog=HOMEPAGE_BLOCK_MGC_PLAYLIST",
+              "actionType": "orpheus", 
+              "text": "更多",
+               },
+        },
+        "creatives": [
+          // 6个卡片
+          {
+            "creativeType": "list",
+            "creativeId": "2829883282",
+            "uiElement": {
+               "mainTitle": { 
+                "title": "遺憾和更多好听的|华语私人雷达", 
+                },
+                
+                "image": { 
+                  "imageUrl": "http://p2.music.126.net/TMcPJ_1OMja0x7502racmw==/109951165665018654.jpg", 
+                },
+                  },
+            "resources": [
+              {
+                "uiElement": {
+                   "mainTitle": {
+                     "title": "遺憾和更多好听的|华语私人雷达",
+                      "canShowTitleLogo": false
+                       }, 
+                       "image": { 
+                        "imageUrl": "http://p2.music.126.net/TMcPJ_1OMja0x7502racmw==/109951165665018654.jpg", 
+                        "purePicture": false 
+                        }, 
+                        "rcmdShowType": "DEFAULT" },
+                "resourceType": "list",
+                "resourceId": "2829883282",
+                "resourceExtInfo": { "playCount": 1840120320, "highQuality": false, "hasListened": false, "specialType": 100 },
+                "action": "orpheus://playlist/2829883282?autoplay=0&referLog=HOMEPAGE_BLOCK_OFFICIAL_PLAYLIST",
+                "logInfo": "{\
+                \"relatedSong\":\"210287\",
+                \"title\":\"遺憾和更多好听的|华语私人雷达\",
+                \"relatedId\":\"7439\"
+                }",
+              }
+            ],
+            "logInfo": "{
+              \"relatedType\":\"ARTIST_LOGO_TEXT\",
+              \"relatedSong\":\"210287\",
+              \"relatedArtist\":\"\",
+              \"title\":\"遺憾和更多好听的|华语私人雷达\",
+              \"relatedId\":\"7439\"
+              }",
+          },
+
+        ],
+      },
+    //   10. 专属场景歌单  方块左右滑动栏   方形左右滑动栏
+      {
+        "blockCode": "HOMEPAGE_BLOCK_OFFICIAL_PLAYLIST",
+        "showType": "HOMEPAGE_SLIDE_PLAYLIST",
+        "dislikeShowType": 0,
+        "uiElement": {
+          "subTitle": { "title": "专属场景歌单", "canShowTitleLogo": false },
+          
+        },
+        "creatives": [
+          // 6个卡片
+          {
+            "creativeType": "list",
+            "creativeId": "8379068755",
+            "uiElement": {
+              "mainTitle": { "title": "24小时自习室 | 保持专注 考前冲刺好伴侣", "canShowTitleLogo": false },
+              "image": {
+                "imageUrl": "http://p1.music.126.net/fdZuyLah8b3uQdXxE-tjkw==/109951168602124098.jpg?imageView=1&thumbnail=800y800&enlarge=1%7CimageView=1&watermark&type=1&image=b2JqL3c1bkRrTUtRd3JMRGpEekNtOE9tLzMwNzYwNDMxOTQ3L2U5YjYvMjAyMzk4MTEyNjU5L3gxNDIxNjk2NzM1NjE5MDgzLnBuZw==&dx=0&dy=0%7Cwatermark&type=1&image=b2JqL3dvbkRsc0tVd3JMQ2xHakNtOEt4LzI3NjEwNDk3MDYyL2VlOTMvOTIxYS82NjE4LzdhMDc5ZDg0NTYyMDAwZmVkZWJmMjVjYjE4NjhkOWEzLnBuZw==&dx=0&dy=0%7CimageView=1",
+              },
+            },
+            "resources": [
+              {
+                "resourceType": "list",
+                "resourceId": "8379068755",
+                "resourceExtInfo": { "playCount": 428432, "highQuality": false, "hasListened": false, "specialType": 100 },
+                "uiElement": {
+                  "mainTitle": { "title": "24小时自习室 | 保持专注 考前冲刺好伴侣", "canShowTitleLogo": false },
+                  "image": {
+                    "imageUrl": "http://p1.music.126.net/fdZuyLah8b3uQdXxE-tjkw==/109951168602124098.jpg?imageView=1&thumbnail=800y800&enlarge=1%7CimageView=1&watermark&type=1&image=b2JqL3c1bkRrTUtRd3JMRGpEekNtOE9tLzMwNzYwNDMxOTQ3L2U5YjYvMjAyMzk4MTEyNjU5L3gxNDIxNjk2NzM1NjE5MDgzLnBuZw==&dx=0&dy=0%7Cwatermark&type=1&image=b2JqL3dvbkRsc0tVd3JMQ2xHakNtOEt4LzI3NjEwNDk3MDYyL2VlOTMvOTIxYS82NjE4LzdhMDc5ZDg0NTYyMDAwZmVkZWJmMjVjYjE4NjhkOWEzLnBuZw==&dx=0&dy=0%7CimageView=1",
+                    "purePicture": false
+                  },
+                },
+              }
+            ],
+          },
+
+        ],
+      },
+    //   11.热门播客 (左右滑块nextmargin)
+      {
+        "blockCode": "HOMEPAGE_VOICELIST_RCMD",
+        "showType": "SLIDE_PODCAST_VOICE_MORE_TAB",
+        "dislikeShowType": 0,
+        "creatives": [
+          //4个卡片
+          {
+            "creativeType": "VOICE_LIST_HOMEPAGE",
+            "uiElement": { "mainTitle": { "title": "热门播客", "canShowTitleLogo": false }, "button": { "action": "orpheus://nm/mainTab/select?tab=voice", "actionType": "orpheus", "text": "更多", "iconUrl": null, "biData": null }, "rcmdShowType": "DEFAULT" },
+            "resources": [
+              // 3条数据
+              {
+                "uiElement": {
+                  "mainTitle": { "title": "奢香夫人-凤凰传奇", "canShowTitleLogo": false },
+                  "subTitle": { "title": "歌会走调，哥不会走掉", "canShowTitleLogo": false },
+                  "image": {
+                     "imageUrl": "http://p2.music.126.net/WU8SqVEoTaEwso82d0RJDQ==/109951168813357873.jpg",
+                      "purePicture": false 
+                    },
+                  "labelTexts": ["歌曲翻唱"],
+                  "labelType": "gray",
+                  "rcmdShowType": "DEFAULT"
+                },
+                "resourceType": "voice",
+                "resourceId": "2527131471",
+                "resourceExtInfo": {
+                  "djProgram": {
+                    
+                    "subscribedCount": 0,
+                    "reward": false,
+                    "mainTrackId": 2070344127,   //跟下面的mainSong。id相同
+                    "listenerCount": 1908819,
+                    "name": "奢香夫人-凤凰传奇",
+                    "id": 2527131471,
+                    "description": "奢香夫人",
+                    "userId": 1550178936,
+                    "coverUrl": "http://p2.music.126.net/WU8SqVEoTaEwso82d0RJDQ==/109951168813357873.jpg",
+                    "commentThreadId": "A_DJ_1_2527131471",
+                    "updateTime": 1691130388526,
+                    "categoryId": 2001,
+                    "category": "创作翻唱",
+                    "secondCategory": "歌曲翻唱",
+                    "duration": 255320,
+
+                    "mainSong": {
+                      "name": "奢香夫人-凤凰传奇",
+                      "id": 2070344127,
+                      "status": 0,
+                      "fee": 0,
+                      "artists": [{ "name": "-滿目山河_h", "id": 0, "picId": 0, "img1v1Id": 0, "briefDesc": "", "picUrl": "", "img1v1Url": "http://p1.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg", "albumSize": 0, "alias": [], "trans": "", "musicSize": 0, "topicPerson": 0 }],
+
+                      "duration": 255320,
+                     
+                      "bMusic": { "name": null, "id": 8322540927, "size": 4085386, "extension": "mp3", "sr": 44100, "dfsId": 0, "bitrate": 128000, "playTime": 255320, "volumeDelta": 0 },
+                      "mp3Url": null,
+                      "hMusic": null,
+                      "mMusic": null,
+                      "mvid": 0,
+                      "lMusic": { "name": null, "id": 8322540927, "size": 4085386, "extension": "mp3", "sr": 44100, "dfsId": 0, "bitrate": 128000, "playTime": 255320, "volumeDelta": 0 }
+                    },
+                  }
+                },
+              },
+            ],
+          },
+
+        ],
+      },
+    //   12. 广播 样式已截图
+      {
+        "blockCode": "HOMEPAGE_PODCAST24",
+        "showType": "SLIDE_PLAYABLE_DRAGON_BALL_NEW_BROADCAST",
+        "uiElement": { "subTitle": { "title": "广播", "canShowTitleLogo": false }, "rcmdShowType": "DEFAULT" },
+        "creatives": [
+          {
+            "creativeType": "PLAYABLE_DRAGON_BALL_NEW_BROADCAST",
+            "actionType": "orpheus",
+            "uiElement": { "mainTitle": { "title": "广播", "canShowTitleLogo": false }, "rcmdShowType": "DEFAULT" },
+            "resources": [
+              // 6个方块卡片
+              {
+                "uiElement": { "mainTitle": { "title": "AsiaFM成都 96.5", "canShowTitleLogo": false },
+                 "image": { "imageUrl": "http://p1.music.126.net/xXHt3G3uxsKGN5iN0dDSiA==/109951165549814256.jpg", "purePicture": false }, "labelTexts": ["广播"], "rcmdShowType": "DEFAULT" },
+                "resourceType": "fm_radio",
+                "resourceState": null,
+                // 截取后面callback的url
+                "resourceId": "orpheus://miniProgram?appId=5fc49fdba5c92810794ebea0&pageId=index%2Findex&query=from%3Dhome%26channelId%3D386&fallbackURL=https%3A%2F%2Fmp.music.163.com%2F5fc49fdba5c92810794ebea0%2Findex%2Findex.html%3Ffrom%3Dhome%26channelId%3D386",
+                "resourceUrl": "orpheus://miniProgram?appId=5fc49fdba5c92810794ebea0&pageId=index%2Findex&query=from%3Dhome%26channelId%3D386&fallbackURL=https%3A%2F%2Fmp.music.163.com%2F5fc49fdba5c92810794ebea0%2Findex%2Findex.html%3Ffrom%3Dhome%26channelId%3D386",
+              },
+    
+            ],
+          }
+        ],
+      },
+    //   13. 云村出品
+      {
+        "blockCode": "HOMEPAGE_BLOCK_YUNCUN_PRODUCED",
+        "showType": "YUNCUN_PRODUCED",
+        "uiElement": {
+          "subTitle": { "title": "云村出品", "canShowTitleLogo": false },
+        },
+        "creatives": [
+          // 6条
+          {
+            "creativeType": "YUNCUN_PRODUCED",
+            "creativeId": "",
+ √           "action": "https://y.music.163.com/m/at/653f714fb383dbffdb9ca049",
+            "uiElement": {
+              "mainTitle": { "title": "网易云音乐与张杰达成全新战略合作", "canShowTitleLogo": false },
+              "subTitle": { "title": "我们相互照亮 成为璀璨星空", "canShowTitleLogo": false },
+              "image": { "imageUrl": "https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/31213685535/7281/348e/1940/43ddee966ad15812b9752249cbfda1fb.jpg", "purePicture": false },
+            },
+            
+          },
+
+        ],
+      },
+    //   14.视频合辑   因为"creativeType": "list",  可能是方形左右滑动拦
+      {
+        "blockCode": "HOMEPAGE_BLOCK_VIDEO_PLAYLIST",
+        "showType": "HOMEPAGE_SLIDE_PLAYLIST",
+        "uiElement": {
+          "subTitle": { "title": "视频合辑", "canShowTitleLogo": false },
+        },
+        "creatives": [
+          // 6条数据
+          {
+            "creativeType": "list",
+            "creativeId": "5476855551",
+            "uiElement": {
+              "mainTitle": { "title": "每日更新|为你私人定制的视频歌单", "canShowTitleLogo": false },
+              "image": { "imageUrl": "http://p2.music.126.net/SO1k0YA8G0CCXmm8ooLT9A==/109951165688123815.jpg", "purePicture": false },
+              "labelTexts": ["流行"],
+            },
+            "resources": [
+              {
+                
+                "resourceExtInfo": { 
+                  "playCount": 6136426, 
+                 },
+              }
+            ],
+          },
+      
+        ],
+      },
+    //   15. 热评歌曲   暂未提取数据，因为没有发现及结构
+      {
+        "blockCode": "HOMEPAGE_BLOCK_NEW_HOT_COMMENT",
+        "showType": "NEW_HOT_COMMENT_WHITE_SKIN_V2",
+        "uiElement": { "subTitle": { "title": "热评歌曲", },  },
+        "creatives": [
+          // 9条
+          {
+            "creativeType": "COMMENT_DETAIL",
+            "creativeId": "5771497045",
+            "uiElement": { 
+              "mainTitle": {
+                 "titleDesc": "《千年之恋》背后的故事就像歌名一样“单飞不解散”依旧是千年不变的长存友情。"
+                  }, 
+                 },
+            "resources": [
+              {
+                "uiElement": { 
+                  "mainTitle": {
+                      "titleDesc": "《千年之恋》背后的故事就像歌名一样“单飞不解散”依旧是千年不变的长存友情。" 
+                      },
+                      },
+                "resourceId": "5771497045",
+                "resourceExtInfo": {
+                  "users": [
+                    {
+                      "defaultAvatar": false,
+                      "province": 0,
+                      "authStatus": 0,
+                      "followed": false,
+                      "avatarUrl": null,
+                      "accountStatus": 0,
+                      "gender": 0,
+                      "city": 0,
+                      "birthday": 0,
+                      "userId": 480222546,
+                      "userType": 0,
+                      "nickname": "馨儿want甜心",
+                      "signature": null,
+                      "description": null,
+                      "detailDescription": null,
+                      "avatarImgId": 0,
+                      "backgroundImgId": 0,
+                      "backgroundUrl": null,
+                      "authority": 0,
+                      "mutual": false,
+                      "expertTags": null,
+                      "experts": null,
+                      "djStatus": 0,
+                      "vipType": 0,
+                      "remarkName": null,
+                      "authenticationTypes": 0,
+                      "avatarDetail": null,
+                      "backgroundImgIdStr": "0",
+                      "avatarImgIdStr": "0",
+                      "anchor": false
+                    }
+                  ],
+                  "songData": {
+                    "name": "千年之恋",
+                    "id": 354500,
+                    "status": 0,
+                    "fee": 1,
+                    "artists": [{ "name": "F.I.R.", "id": 11562, "picId": 0, "img1v1Id": 0, "briefDesc": "", "picUrl": "", "img1v1Url": "http://p2.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg", "albumSize": 0, "alias": [], "trans": "", "musicSize": 0, "topicPerson": 0 }],
+                    "album": {
+                      "name": "无限",
+                      "id": 34980,
+                      "type": "专辑",
+                      "blurPicUrl": "http://p2.music.126.net/6oL6XlxPvHLW3tH8xtarEA==/109951167896041950.jpg",
+                      "picUrl": "http://p2.music.126.net/6oL6XlxPvHLW3tH8xtarEA==/109951167896041950.jpg",
+                      "company": "华纳音乐",
+                      "artist": { "name": "", "id": 0, "picId": 0, "img1v1Id": 0, "briefDesc": "", "picUrl": "", "img1v1Url": "http://p2.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg", "albumSize": 0, "alias": [], "trans": "", "musicSize": 0, "topicPerson": 0 },
+                      "artists": [{ "name": "F.I.R.", "id": 11562, "picId": 0, "img1v1Id": 0, "briefDesc": "", "picUrl": "", "img1v1Url": "http://p2.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg", "albumSize": 0, "alias": [], "trans": "", "musicSize": 0, "topicPerson": 0 }],
+                      "subType": "录音室版",
+                    },
+                    "popularity": 100,
+                    "duration": 228173,
+                    "sqMusic": { "name": null, "id": 7546633765, "size": 28223205, "extension": "flac", "sr": 44100, "dfsId": 0, "bitrate": 989535, "playTime": 228173, "volumeDelta": -78996 },
+                    "bMusic": { "name": null, "id": 7546633760, "size": 3651753, "extension": "mp3", "sr": 44100, "dfsId": 0, "bitrate": 128000, "playTime": 228173, "volumeDelta": -74928 },
+                    "mp3Url": null,
+                    "hMusic": { "name": null, "id": 7546633762, "size": 9129317, "extension": "mp3", "sr": 44100, "dfsId": 0, "bitrate": 320000, "playTime": 228173, "volumeDelta": -79006 },
+                    "mMusic": { "name": null, "id": 7546633759, "size": 5477608, "extension": "mp3", "sr": 44100, "dfsId": 0, "bitrate": 192000, "playTime": 228173, "volumeDelta": -76456 },
+                    "mvid": 5337366,
+                    "lMusic": { "name": null, "id": 7546633760, "size": 3651753, "extension": "mp3", "sr": 44100, "dfsId": 0, "bitrate": 128000, "playTime": 228173, "volumeDelta": -74928 }
+                  },
+                  "hasListened": false,
+                  "threadId": "R_SO_4_354500"
+                },
+                "likedCount": 543,
+              }
+            ],
+          },
+         
+        ],
+      },
+      // 16. 精品有声书  四个左右滑块，每个滑块三首音乐
+      {
+        "blockCode": "HOMEPAGE_VOICEBOOK_RCMD",
+        "showType": "SLIDE_RCMDLIKE_VOICELIST",
+        "uiElement": {
+          "subTitle": { "title": "精品有声书", },
+        },
+        "creatives": [
+          // 6条
+          {
+            "creativeType": "voiceList",
+            "creativeId": "792081397",
+            "action": "orpheus://nm/voicelist/detail?id=792081397&autoplayRecent=true&autoplayFirst=true",
+            "uiElement": {
+              "mainTitle": { "title": "一听就会的古典音乐鉴赏指南", "canShowTitleLogo": false },
+              "image": { "imageUrl": "http://p2.music.126.net/B2LKerezmks1wv8qisafTg==/109951168520874050.jpg", "purePicture": false },
+              "labelTexts": ["成长励志"],
+              "labelType": "gray",
+            },
+            "creativeExtInfoVO": { "playCount": 33017533 },
+          },
+        
+        ],
+      }
+    ],
+    
+    "exposedResource": "{\
+    "song\":[
+      \"569200211\",
+      \"447926067\",
+      \"133998\",
+      \"326705\",
+      \"28310921\",
+      \"513357239\",
+      \"517902790\",
+      \"2014967693\",
+      \"28257524\",
+      \"421423806\",
+      \"422428548\",
+      \"386837\"
+      ],
+      \"playlist\":[]
+      }",
+  },
+  "message": ""
+}

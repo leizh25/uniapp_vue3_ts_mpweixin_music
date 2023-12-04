@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>歌词</title>
+  </head>
+  <body>
+    <script>
+      let lrcstr =
+        '[00:00.000] 作词 : 张国祥\n[00:01.000] 作曲 : 汤小康\n[00:04.050]\n[00:12.570]难以忘记初次见你\n[00:16.860]一双迷人的眼睛\n[00:21.460]在我脑海里\n[00:23.960]你的身影 挥散不去\n[00:30.160]握你的双手感觉你的温柔\n[00:34.940]真的有点透不过气\n[00:39.680]你的天真 我想珍惜\n[00:43.880]看到你受委屈 我会伤心\n[00:48.180]喔\n[00:50.340]只怕我自己会爱上你\n[00:55.070]不敢让自己靠的太近\n[00:59.550]怕我没什么能够给你\n[01:04.030]爱你也需要很大的勇气\n[01:08.190]只怕我自己会爱上你\n[01:12.910]也许有天会情不自禁\n[01:17.380]想念只让自己苦了自己\n[01:21.840]爱上你是我情非得已\n[01:28.810]难以忘记初次见你\n[01:33.170]一双迷人的眼睛\n[01:37.700]在我脑海里 你的身影 挥散不去\n[01:46.360]握你的双手感觉你的温柔\n[01:51.120]真的有点透不过气\n[01:55.910]你的天真 我想珍惜\n[02:00.150]看到你受委屈 我会伤心\n[02:04.490]喔\n[02:06.540]只怕我自己会爱上你\n[02:11.240]不敢让自己靠的太近\n[02:15.750]怕我没什么能够给你\n[02:20.200]爱你也需要很大的勇气\n[02:24.570]只怕我自己会爱上你\n[02:29.230]也许有天会情不自禁\n[02:33.680]想念只让自己苦了自己\n[02:38.140]爱上你是我情非得已\n[03:04.060]什么原因 耶\n[03:07.730]我竟然又会遇见你\n[03:13.020]我真的真的不愿意\n[03:16.630]就这样陷入爱的陷阱\n[03:20.700]喔\n[03:22.910]只怕我自己会爱上你\n[03:27.570]不敢让自己靠的太近\n[03:32.040]怕我没什么能够给你\n[03:36.560]爱你也需要很大的勇气\n[03:40.740]只怕我自己会爱上你\n[03:45.460]也许有天会情不自禁\n[03:49.990]想念只让自己苦了自己\n[03:54.510]爱上你是我情非得已\n[03:58.970]爱上你是我情非得已\n[04:03.000]\n'
+      function Lrc(lrcstr) {
+        // lrc歌词解析器 依赖axios库
+        this.flagTags = {} // 解析的标志标签 [by:xiaohuohu]
+        this.timeTags = {} // 解析的歌词 [3:20.3]hello world
+        this.requestText = '' // 请求的lrc内容
+        this.canPlay = 0 // 当前状态 0 未加载 1 获取失败 2 解析失败 3 解析成功
+        this.canPlayInf = ['外星人正在搜寻歌词,请稍后', '外星人未找到歌词', '歌词外星人无法解析'] // 与canPlay 对应提示 除3之外
+        this.lastWord = '' // 上一次歌词
+        this.getLrc = async function () {
+          // 异步获取歌词
+          let _this = this
+          _this.canPlay = 0
+          /* axios
+            .get(requestUrl)
+            .then(function (response) {
+              let data = response.data // 获取数据
+              _this.requestText = data
+              _this.flagTags = _this.getFlagTags(data) // 解析标志
+              _this.timeTags = _this.getTimeTags(data) // 解析歌词
+              // 判断是否成功解析,不为空.
+              _this.canPlay = Object.keys(_this.timeTags).length == 0 ? 2 : 3 // 设置当前状态
+            })
+            .catch(function (error) {
+              _this.canPlay = 1 // 设置错误状态
+              console.log(error)
+            }) */
+          _this.requestText = lrcstr
+          _this.flagTags = _this.getFlagTags(lrcstr) // 解析标志
+          _this.timeTags = _this.getTimeTags(lrcstr) // 解析歌词
+          // 判断是否成功解析,不为空.
+          _this.canPlay = Object.keys(_this.timeTags).length == 0 ? 2 : 3 // 设置当前状态
+          console.log('解析歌词完成')
+          return _this
+        }
+        this.getRequestText = function () {
+          // 获取lrc源文件
+          return this.requestText
+        }
+        this.getFlagTags = function (text) {
+          // 解析标记标签 text lrc文本
+          // return {标签名:标签值} 例如: {by:xiaohuohu}
+          let res = {}
+          if (typeof text !== 'string') {
+            return res
+          } // 检查参数
+          let find = text.match(/\[[A-Za-z]+\:[^\[\]]*\]/g) // 匹标志标签
+          for (let findKey in find) {
+            let textArrayItem = find[findKey]
+            let tagName = textArrayItem.substring(textArrayItem.indexOf('[') + 1, textArrayItem.indexOf(':'))
+            let tagText = textArrayItem.substring(textArrayItem.indexOf(':') + 1, textArrayItem.indexOf(']'))
+            res[tagName] = tagText
+          }
+          return res
+        }
+        this.getWord = function (time, flag = true, timeDeviation = 50) {
+          // 获取解析歌词 time: 毫秒 flag:是否模糊匹配 若为 false 且找不到时返回 ''
+          // timeDeviation:模糊时间 (time - timeDeviation< time < time + timeDeviation),flag 为true 时生效
+          if (this.canPlay == 3) {
+            // 解析成功
+            if (flag) {
+              // 模糊匹配
+              for (let key in this.timeTags) {
+                // 获取大概区间的第一个歌词
+                if (key >= time - timeDeviation && key <= time + timeDeviation) {
+                  this.lastWord = this.timeTags[key]
+                  return this.timeTags[key]
+                } else if (key > time + timeDeviation) {
+                  // 未找到返回上一次的歌词
+                  return this.lastWord
+                }
+              }
+            } else {
+              // 精确匹配
+              let res = this.timeTags[time]
+              return res ? res : ''
+            }
+          } else {
+            // 其它状态
+            return this.canPlayInf[this.canPlay]
+          }
+        }
+        this.getTag = function () {
+          // 获取歌曲信息
+          return this.flagTags
+        }
+        this.getTimeTags = function (text) {
+          // 解析歌词标签 text lrc全部文本
+          // return {time:word} 例如{12300:'hello world'}
+          // [m:s.ms] or [m:s:ms] or [m:s], [1:2.3] or [01:02.03] or [01:02] ...
+          let res = {} // 结果
+          if (typeof text != 'string') {
+            return res
+          } // 检查参数
+          let textArray = text.split('\n') // 歌词拆分
+          let timeRule = [60000, 1000, 1] // 对应位数的毫秒数
+          let addTime = 0 // 时间补偿
+          for (let textArrayKey in textArray) {
+            let textArrayItem = textArray[textArrayKey]
+            if (textArrayItem.match(/(?:\[\d+\:\d+(?:[.:]\d+)?\])+.*/)) {
+              // 判断是否符合歌词的规则
+              let findWord = textArrayItem.replace(/(?:\[\d+\:\d+(?:[.:]\d+)?\])+/g, '').trim() // 歌去除时间保留歌词,并去除两端多余空格
+              if (findWord) {
+                // 去除歌词为空的项
+                let findTime = textArrayItem.match(/(?:\[\d+\:\d+(?:[.:]\d+)?\])/g) // 匹配多个时间 例如 [1:2.3][4:2.4]hello world
+                for (let findTimeKey in findTime) {
+                  let findTimeItem = findTime[findTimeKey].match(/\d+/g) // 切割每一个时间的m s ms部分
+                  let nowTime = addTime // 初始为偏移时间 解决[offset:-232]操作
+                  for (let x = 0; x < findTimeItem.length; x++) {
+                    nowTime += parseInt(findTimeItem[x]) * timeRule[x] // 分钟,秒,毫秒转换为转毫秒之后累加
+                  }
+                  res[nowTime > 0 ? nowTime : 0] = findWord // 限制下线时间 0
+                }
+              }
+            } else if (textArrayItem.match(/^\[offset\:\-?[1-9]\d+\]$/)) {
+              // 匹配偏移时间 解决[offset:-232]操作
+              // [offset:-232]正值表示整体提前，负值相反
+              addTime -= parseInt(textArrayItem.substring(textArrayItem.indexOf(':') + 1, textArrayItem.length))
+            }
+          }
+          return res
+        }
+      }
+
+      let lrcob = new Lrc(lrcstr)
+      lrcob.getLrc() // 加载lrc歌词文件
+      //   let time = 0
+      //   setInterval(() => {
+      //     // 模仿audio,video时间进度条
+      //     console.log(lrcob.getWord(time, true, 100)) // 模糊获取歌词 50为模糊值
+      //     // lrcob.getWord(time,false); // 精确获取歌词
+      //     time += 100
+      //   }, 100)
+      console.log('lrcob.flagTags:', lrcob.flagTags)
+      console.log('lrcob.timeTags::', lrcob.timeTags)
+    </script>
+  </body>
+</html>
