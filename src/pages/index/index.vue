@@ -1,26 +1,26 @@
 <template>
   <div id="index_wrapper" @touch.stop>
     <!-- 搜索框 -->
-    <div @click="clickInput" class="search_wrapper" :style="{ height: systemInfoStore.navigationBarHeight + 'px', paddingTop: systemInfoStore.statusBarHeight + 'px' }">
-      <van-search disabled placeholder="搜索音乐、歌词、MV、电台" @click-input="clickInput" background="opacity" />
+    <div @click="clickInput" class="search_wrapper" :style="{ width: systemInfoStore.custom?.left! - 15 + 'px', height: systemInfoStore.navigationBarHeight + 'px', paddingTop: systemInfoStore.statusBarHeight + 'px' }">
+      <van-search disabled placeholder="搜索音乐、歌词、MV" @click-input="clickInput" background="opacity" />
     </div>
     <scroll-view scroll-y @refresherrefresh="refresherrefresh" class="index_scroll_view">
       <!-- 轮播图 -->
       <div class="swiper_wrapper">
-        <swiper class="swiper" circular indicator-dots="true" autoplay="true" interval="4000" duration="500" indicator-active-color="#162A78" enable-back-to-top>
-          <swiper-item v-for="item in banners" :key="item.id" class="swiper_item" @click="bannerGoPage(item)">
+        <swiper class="swiper" circular :indicator-dots="true" :autoplay="true" :interval="4000" :duration="500" indicator-active-color="#162A78" enable-back-to-top>
+          <swiper-item v-for="item in banners" :key="item.bannerId" class="swiper_item" @click="bannerGoPage(item)">
             <img :src="item.pic" style="width: 100%; height: 100%" class="img" />
             <div class="title">{{ item.typeTitle }}</div>
           </swiper-item>
         </swiper>
       </div>
       <!-- 龙舟 -->
-      <swiper class="swiper2" :display-multiple-items="indexDataStore.HOMEPAGE_BLOCK_OLD_DRAGON_BALL.length && 5">
-        <swiper-item v-for="(item, index) in indexDataStore.HOMEPAGE_BLOCK_OLD_DRAGON_BALL" :key="index">
+      <swiper class="swiper2" :display-multiple-items="indexDataStore.HOMEPAGE_BLOCK_OLD_DRAGON_BALL.creatives?.length && 5">
+        <swiper-item v-for="(item, index) in indexDataStore.HOMEPAGE_BLOCK_OLD_DRAGON_BALL.creatives?.[0].resources" :key="index">
           <div class="item_box" @click="goPage('daily_recommend', 'param')">
-            <img :src="item.imageUrl2" class="img" />
-            <div class="text">{{ item.title }}</div>
-            <div class="date" v-if="item.title === '每日推荐'">{{ new Date().getDate() }}</div>
+            <img :src="item.uiElement.image.imageUrl2" class="img" />
+            <div class="text">{{ item.uiElement.mainTitle?.title }}</div>
+            <div class="date" v-if="item.uiElement.mainTitle?.title === '每日推荐'">{{ new Date().getDate() }}</div>
           </div>
         </swiper-item>
         <!-- <swiper-item>
@@ -55,44 +55,46 @@
           </div>
         </swiper-item> -->
       </swiper>
+
       <!-- 推荐歌单 方形 -->
       <div class="recommend_song_list paddingbottom20">
         <van-cell :border="false">
-          <view slot="title">
-            <view class="van-cell-text">
-              推荐歌单
+          <div slot="title">
+            <div class="van-cell-text">
+              {{ indexDataStore.HOMEPAGE_BLOCK_PLAYLIST_RCMD.uiElement?.subTitle.title }}
               <van-icon name="arrow" class="custom-icon" />
-            </view>
-          </view>
-          <van-icon slot="right-icon" name="ellipsis" class="custom-icon" size="20px" style="transform: rotateZ(90deg)" @click="openActionSheet('推荐歌单选项卡')" />
+            </div>
+          </div>
+          <van-icon slot="right-icon" name="ellipsis" class="custom-icon" size="20px" style="transform: rotateZ(90deg)" @click="openActionSheet(`${indexDataStore.HOMEPAGE_BLOCK_PLAYLIST_RCMD.uiElement?.subTitle.title}选项卡`)" />
         </van-cell>
-        <scroll-view scroll-x="true" class="scrollview">
+        <scroll-view :scroll-x="true" class="scrollview">
           <!-- <div style="display: inline-block; width: 10px"></div> -->
           <!-- 上下滚动盒子 -->
           <swiper vertical circular autoplay class="scroll_item swiper">
-            <swiper-item class="swiper-item" v-for="item in indexDataStore.HOMEPAGE_BLOCK_PLAYLIST_RCMD.scroll_playlist?.res" :key="item.resourceId">
+            <swiper-item class="swiper-item" v-for="item in indexDataStore.HOMEPAGE_BLOCK_PLAYLIST_RCMD.creatives?.[0].resources" :key="item.resourceId">
               <rectMusicBox :songList="item" :showSlot="true" to="manyousonglist">
                 <template><img src="/static/img/infinite.png" style="width: 30px; height: 20px" /></template>
               </rectMusicBox>
             </swiper-item>
           </swiper>
           <!-- 左右滚动盒子 -->
-          <div class="scroll_item" v-for="item in indexDataStore.HOMEPAGE_BLOCK_PLAYLIST_RCMD.playlist?.res" :key="item.resourceId">
-            <rectMusicBox :songList="item" to="songlist"></rectMusicBox>
+          <div class="scroll_item" v-for="item in indexDataStore.HOMEPAGE_BLOCK_PLAYLIST_RCMD.creatives?.slice(1, 6)" :key="item.creativeId">
+            <rectMusicBox :songList="item.resources![0]" to="songlist"></rectMusicBox>
           </div>
         </scroll-view>
       </div>
+
       <!-- 风格推荐 -->
       <div class="nice_recommend_song_list paddingbottom20">
         <van-cell :border="false" icon="replay">
-          <view slot="title">
-            <view class="van-cell-text">{{ indexDataStore.HOMEPAGE_BLOCK_STYLE_RCMD.title }}</view>
-          </view>
-          <van-icon slot="right-icon" name="ellipsis" class="custom-icon" size="20px" style="transform: rotateZ(90deg)" @click="openActionSheet('好听的宝藏歌曲推荐选项卡')" />
+          <div slot="title">
+            <div class="van-cell-text">{{ indexDataStore.HOMEPAGE_BLOCK_STYLE_RCMD.uiElement?.subTitle.title }}</div>
+          </div>
+          <van-icon slot="right-icon" name="ellipsis" class="custom-icon" size="20px" style="transform: rotateZ(90deg)" @click="openActionSheet(`${indexDataStore.HOMEPAGE_BLOCK_STYLE_RCMD.uiElement?.subTitle.title}选项卡`)" />
         </van-cell>
         <swiper class="swiper3" next-margin="50">
-          <swiper-item class="swiper_item" v-for="(item, index) in indexDataStore.HOMEPAGE_BLOCK_STYLE_RCMD.res" :key="index">
-            <longMusicBox v-for="music in item" :music="music" :key="music.resourceId"></longMusicBox>
+          <swiper-item class="swiper_item" v-for="(item, index) in indexDataStore.HOMEPAGE_BLOCK_STYLE_RCMD.creatives" :key="index">
+            <longMusicBox v-for="music in item.resources" :music="music" :key="music.resourceId"></longMusicBox>
           </swiper-item>
         </swiper>
       </div>
@@ -112,18 +114,18 @@
       <!-- 热门话题 -->
       <div class="hot_topic_wrapper paddingbottom20">
         <van-cell :border="false">
-          <view slot="title">
-            <view class="van-cell-text">
-              {{ indexDataStore?.HOMEPAGE_BLOCK_HOT_TOPIC?.title }}
+          <div slot="title">
+            <div class="van-cell-text">
+              {{ indexDataStore?.HOMEPAGE_BLOCK_HOT_TOPIC.uiElement?.subTitle.title }}
               <van-icon name="arrow" class="custom-icon" />
-            </view>
-          </view>
-          <van-icon slot="right-icon" name="ellipsis" class="custom-icon" size="20px" style="transform: rotateZ(90deg)" @click="openActionSheet('热门话题选项卡')" />
+            </div>
+          </div>
+          <van-icon slot="right-icon" name="ellipsis" class="custom-icon" size="20px" style="transform: rotateZ(90deg)" @click="openActionSheet(`${indexDataStore?.HOMEPAGE_BLOCK_HOT_TOPIC.uiElement?.subTitle.title}选项卡`)" />
         </van-cell>
-        <scroll-view class="scroll_view" scroll-x="true">
+        <scroll-view class="scroll_view" :scroll-x="true">
           <!-- <div class="zhanwei" style="width: 10px;height: 105px;"></div> -->
-          <template v-for="arr in indexDataStore.HOMEPAGE_BLOCK_HOT_TOPIC.resources" :key="arr.creativeId">
-            <topicCard v-for="item in arr.resources" :key="item.resourceId" :topic="item"></topicCard>
+          <template v-for="obj in indexDataStore.HOMEPAGE_BLOCK_HOT_TOPIC.creatives" :key="obj.creativeId">
+            <topicCard v-for="item in obj.resources" :key="item.resourceId" :topic="item"></topicCard>
           </template>
           <!-- <topicCard v-for="item in indexDataStore.HOMEPAGE_BLOCK_HOT_TOPIC.resources[0].resources" :key="item.creativeId" :topic="item"></topicCard> -->
         </scroll-view>
@@ -140,23 +142,25 @@
   </div>
 </template>
 
-<script setup>
-import { request } from '@/utils/request'
+<script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import Notify from '@/wxcomponents/@vant/weapp/notify/notify'
 import longMusicBox from '@/components/long-music-box.vue'
 import rectMusicBox from '@/components/rect-music-box.vue'
-import bottomMusicBar from '@/components/bottom-music-bar'
-import { useSystemInfoStore } from '@/stores/systemInfo.js'
-import { useIndexDataStore } from '@/stores/indexData.js'
-import topicCard from '@/components/topic-card'
+import bottomMusicBar from '@/components/bottom-music-bar.vue'
+import { useSystemInfoStore } from '@/stores/systemInfo'
+import { useIndexDataStore } from '@/stores/indexData'
+import topicCard from '@/components/topic-card.vue'
 import songListSheet from '@/components/song-list-sheet.vue'
-console.log('Notify: ', Notify)
+import { reqBanner } from '@/api/index'
+import type { BannerResponse, banner } from '@/api/index/type'
+import { onPullDownRefresh } from '@dcloudio/uni-app'
+import { usePlayingStore } from '@/stores/playing'
+const playingStore = usePlayingStore()
 const systemInfoStore = useSystemInfoStore()
 const indexDataStore = useIndexDataStore()
-// console.log('systemInfoStore: ', systemInfoStore)
-// uni.getSystemInfoSync()
-console.log('uni.getSystemInfoSync(): ', uni.getSystemInfoSync())
+
+// console.log('uni.getSystemInfoSync(): ', uni.getSystemInfoSync())
 // 上弹面板开关
 const showAction = ref(false)
 const showActionTitle = ref('')
@@ -175,21 +179,30 @@ const actions = ref([
     icon: '/static/img/gengduo2.png',
   },
 ])
-const openActionSheet = (str) => {
+// 下拉刷新钩子
+onPullDownRefresh(async () => {
+  try {
+    await indexDataStore.init()
+    Notify({ type: 'success', message: '刷新成功', safeAreaInsetTop: false, top: systemInfoStore.statusBarHeight })
+    uni.stopPullDownRefresh()
+  } catch (error) {}
+})
+const openActionSheet = (str: string) => {
   showAction.value = true
   showActionTitle.value = str
 }
 //点击上弹面板选项
-const onSelect = (e) => {
+const onSelect = (e: any) => {
   console.log('onSelect: ', e.detail)
   Notify({
     message: e.detail.name,
     type: 'success',
     top: systemInfoStore.statusBarHeight,
+    safeAreaInsetTop: false,
   })
 }
 //轮播图数据
-const banners = ref([])
+const banners = ref<banner[]>()
 //推荐歌单数据
 const recommendSongList = ref([])
 //点击首屏输入框
@@ -202,80 +215,41 @@ const clickInput = () => {
 
 //获取轮播图数据
 const getBanners = async () => {
-  const res = await request({
-    url: '/banner?type=2',
-  })
-  // console.log('res: ', res)
-  if (res.code == 200) {
-    banners.value = res.banners.map((item) => {
-      return {
-        pic: item.pic,
-        typeTitle: item.typeTitle,
-        id: item.bannerId,
-        url: item.url,
-        song: item.song && {
-          name: item.song.name,
-          id: item.song.id,
-          ar: item.song.ar.map((item) => {
-            return { id: item.id, name: item.name }
-          }),
-        },
-      }
-    })
-    // console.log(banners.value)
-  }
-}
-//获取推荐歌单数据
-const getRecommendSongList = async () => {
-  const res = await request({
-    url: '/personalized',
-    data: {
-      limit: 6,
-    },
-  })
-  if (res.code === 200) {
-    recommendSongList.value = res.result.map((item) => {
-      return {
-        id: item.id,
-        name: item.name,
-        picUrl: item.picUrl,
-        playCount: item.playCount,
-      }
-    })
-  }
+  try {
+    const res: BannerResponse = await reqBanner()
+    if (res.code === 200) {
+      banners.value = res.banners
+    }
+  } catch (error) {}
 }
 
 //初始化数据
-onMounted(() => {
-  getBanners()
-  getRecommendSongList()
-  //获取菜单按钮（右上角胶囊按钮）的布局位置信息。坐标信息以屏幕左上角为原点。
-  let menuButtonObject = uni.getMenuButtonBoundingClientRect()
-  uni.getSystemInfo({
-    //获取系统信息
-    success: (res) => {
-      //导航栏高度=菜单按钮高度+（菜单按钮与顶部距离-状态栏高度）*2
-      // let navHeight = menuButtonObject.height + (menuButtonObject.top - res.statusBarHeight) * 2
-      // titleBarHeight.value = navHeight
-      // statusBarHeight.value = res.statusBarHeight
+onMounted(async () => {
+  // await indexDataStore.init()
+  uni.startPullDownRefresh({
+    success:() => {
+      uni.stopPullDownRefresh()
     },
-    fail(err) {
-      console.log(err)
-    },
+    fail:() => {
+    Notify({ type: 'danger', message: '内容加载失败,请下拉刷新', safeAreaInsetTop: false, top: systemInfoStore.statusBarHeight })
+    }
   })
+  getBanners()
+  // getRecommendSongList()
 })
 // 页面跳转
-const goPage = (pageName, param) => {
+const goPage = (pageName: string, param: any) => {
   console.log('跳转页面: ', pageName)
   uni.navigateTo({
     url: `/pages/${pageName}/${pageName}`,
   })
 }
 // 轮播图跳转
-const bannerGoPage = (banner) => {
+const bannerGoPage = (banner: banner) => {
   // console.log('banner: ', banner)
   // console.log();
   if (banner.song) {
+    playingStore.playNextSong(banner.song.id?.toString())
     uni.navigateTo({
       url: `/pages/playing/playing`,
     })
@@ -309,10 +283,10 @@ const refresherrefresh = () => {
 
   //搜索框
   .search_wrapper {
-    width: 70vw;
+    // width: 70vw;
     // padding: 10px;
     // padding-top: 5px;
-    padding-left: 10px;
+    padding: 0 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;

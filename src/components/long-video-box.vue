@@ -6,14 +6,14 @@
       <div class="info">
         <div class="author">{{ mv.artistName }}</div>
         <div class="count_box">
-          <div class="count">{{ parseInt(mv.playCount / 10000) }}万播放</div>
+          <div class="count">{{ parseInt((mv.playCount / 10000).toString()) }}万播放</div>
           <!-- <div class="count">2023-12-01</div> -->
         </div>
       </div>
     </div>
   </div>
 </template>
-<script setup>
+<script setup lang="ts">
 const props = defineProps(['mv'])
 const refresh = () => {
   uni.redirectTo({

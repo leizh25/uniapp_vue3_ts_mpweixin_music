@@ -22,5 +22,5 @@
     "src/**/*.vue",
     "typings/**/*.ts",
     "typings/**/*.d.ts"
-  ]
+, "src/utils/processLrc.js"  ]
 }

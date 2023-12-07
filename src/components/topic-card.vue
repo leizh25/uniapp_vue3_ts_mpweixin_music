@@ -1,29 +1,35 @@
 <template>
-  <div class="scroll_item" :style="{ backgroundImage: `url(${topic.backgroundUrl})` }">
+  <div class="scroll_item" :style="{ backgroundImage: `url(${topic.uiElement.image.imageUrl})` }">
     <div class="bg">
       <div class="inner_box">
         <div class="left">
           <div class="title_wrapper">
-            <div class="title">{{ topic?.mainTitle }}</div>
-            <div class="hot">{{ topic?.subTitle }}</div>
+            <div class="title_box">
+              <img :src="topic.uiElement.mainTitle.titleImgUrl" class="img" />
+              <div class="title">{{ topic.uiElement.mainTitle.title }}</div>
+            </div>
+            <div class="hot">{{ topic.uiElement.subTitle.title }}</div>
           </div>
-          <text class="desc">{{ topic?.eventMsg }}</text>
+          <span class="desc">{{ topic.resourceExtInfo.eventMsg }}</span>
         </div>
         <div class="img_box">
-          <img :src="topic?.imageUrl" class="img" lazy-load="true"/>
+          <img :src="topic.uiElement.image.imageUrl" class="img" lazy-load="true" />
         </div>
       </div>
     </div>
   </div>
 </template>
-<script setup>
-import {  onMounted } from 'vue'
-const props = defineProps(['topic'])
+<script setup lang="ts">
+import type { resource6_1 } from '@/api/index/type'
+import { onMounted } from 'vue'
+const props = defineProps<{
+  topic: resource6_1
+}>()
 onMounted(() => {
   // console.log(props.topic)
 })
 </script>
-<style lang="less" scoped>
+<style lang="less">
 .scroll_item {
   display: inline-block;
   width: 250px;
@@ -50,13 +56,25 @@ onMounted(() => {
       .left {
         flex-direction: column;
         justify-content: space-between;
+        mix-blend-mode: difference;
+        filter: invert(1) grayscale(1) contrast(2);
+        color: #eee;
 
         .title_wrapper {
           height: 35px;
-          .title {
-            font-weight: bold;
-            color: #fff;
-            font-size: 13px;
+          .title_box {
+            display: flex;
+
+            .img {
+              width: 20px;
+              height: 20px;
+              margin-right: 5px;
+            }
+            .title {
+              font-weight: bold;
+              color: #fff;
+              font-size: 13px;
+            }
           }
           .hot {
             margin-top: 2px;

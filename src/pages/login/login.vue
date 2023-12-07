@@ -5,11 +5,11 @@
         <van-tab title="验证码">
           <van-row>
             <van-col span="24">
-              <van-field placeholder="手机号" label="手机号" name="手机号" type="number" clearable v-model:value="uphone" style="text-align: center" :error-message="phoneErrMsg" @input="(e) => (uphone = e.detail.trim())" />
+              <van-field placeholder="手机号" label="手机号" name="手机号" type="number" clearable v-model:value="uphone" style="text-align: center" :error-message="phoneErrMsg" @input="(e:any) => (uphone = e.detail.trim())" />
             </van-col>
           </van-row>
           <van-cell-group>
-            <van-field v-model:value="sms" center clearable label="短信验证码" name="短信验证码" type="number" placeholder="请输入短信验证码" use-button-slot @blur="(e) => (sms = e.detail.value.trim())" :error-message="smsErrMsg">
+            <van-field v-model:value="sms" center clearable label="短信验证码" name="短信验证码" type="number" placeholder="请输入短信验证码" use-button-slot @blur="(e:any) => (sms = e.detail.value.trim())" :error-message="smsErrMsg">
               <van-button slot="button" size="small" type="primary" @click="sendSms" :disabled="disableSms">发送验证码</van-button>
             </van-field>
           </van-cell-group>
@@ -18,12 +18,12 @@
         <van-tab title="密码">
           <van-row>
             <van-col span="24">
-              <van-field placeholder="请输入账号" label="手机号" name="用户名" v-model:value="uphone" style="text-align: center" clearable :error-message="phoneErrMsg" @blur="(e) => (uphone = e.detail.value.trim())" />
+              <van-field placeholder="请输入账号" label="手机号" name="用户名" v-model:value="uphone" style="text-align: center" clearable :error-message="phoneErrMsg" @blur="(e:any) => (uphone = e.detail.value.trim())" />
             </van-col>
           </van-row>
           <van-row>
             <van-col span="24">
-              <van-field placeholder="请输入密码" label="密码" name="密码" v-model:value="upass" style="text-align: center" :type="showUpass ? 'text' : 'password'" :error-message="upassErrMsg" @blur="(e) => (upass = e.detail.value.trim())">
+              <van-field placeholder="请输入密码" label="密码" name="密码" v-model:value="upass" style="text-align: center" :type="showUpass ? 'text' : 'password'" :error-message="upassErrMsg" @blur="(e:any) => (upass = e.detail.value.trim())">
                 <div slot="right-icon" @click="changeShowUpass">
                   <van-icon name="eye-o" v-show="showUpass" />
                   <van-icon name="closed-eye" v-show="!showUpass" />
@@ -35,12 +35,12 @@
         <van-tab title="邮箱">
           <van-row>
             <van-col span="24">
-              <van-field placeholder="请输入用邮箱" label="邮箱" name="邮箱" v-model:value="uemail" style="text-align: center" :error-message="uemailErrMsg" @blur="(e) => (uemail = e.detail.value.trim())" />
+              <van-field placeholder="请输入用邮箱" label="邮箱" name="邮箱" v-model:value="uemail" style="text-align: center" :error-message="uemailErrMsg" @blur="(e:any) => (uemail = e.detail.value.trim())" />
             </van-col>
           </van-row>
           <van-row>
             <van-col span="24">
-              <van-field placeholder="请输入密码" label="密码" name="密码" v-model:value="upass" style="text-align: center" :type="showUpass ? 'text' : 'password'" :error-message="upassErrMsg" @blur="(e) => (upass = e.detail.value.trim())">
+              <van-field placeholder="请输入密码" label="密码" name="密码" v-model:value="upass" style="text-align: center" :type="showUpass ? 'text' : 'password'" :error-message="upassErrMsg" @blur="(e:any) => (upass = e.detail.value.trim())">
                 <div slot="right-icon" @click="changeShowUpass">
                   <van-icon name="eye-o" v-show="showUpass" />
                   <van-icon name="closed-eye" v-show="!showUpass" />
@@ -58,12 +58,14 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import { request } from '@/utils/request'
 import Notify from '@/wxcomponents/@vant/weapp/notify/notify'
 import { useUserStore } from '@/stores/user'
-import { useSystemInfoStore } from '@/stores/systemInfo.js'
+import { useSystemInfoStore } from '@/stores/systemInfo'
+import { reqSentCaptcha, reqVerifyCaptcha } from '@/api/login'
+import type { SentCaptchaResponse, VerifyCaptchaResponse } from '@/api/login/type'
 const userStore = useUserStore()
 const systemInfoStore = useSystemInfoStore()
 const { statusBarHeight } = systemInfoStore
@@ -73,8 +75,8 @@ const tabIdx = ref(0)
 //用户输入框
 const upass = ref('')
 const uemail = ref('')
-const uphone = ref('13207075356')
-const sms = ref('')
+const uphone = ref<number>(13207075356)
+const sms = ref<number | string>()
 //错误提示
 const phoneErrMsg = ref('')
 const smsErrMsg = ref('')
@@ -87,10 +89,10 @@ const disableSms = ref(false)
 //短信倒计时
 const smsCount = ref(60)
 //定时器
-let timer1 = null
-let timer2 = null
+let timer1: any = null
+let timer2: any = null
 //标签页改变回调
-const change = (e) => {
+const change = (e: any) => {
   // console.log(e.detail.index);
   tabIdx.value = e.detail.index
   upass.value = ''
@@ -107,13 +109,8 @@ const sendSms = async () => {
   try {
     await validate({ smsFlag: false })
     console.log('发送验证码')
-    const res = await request({
-      url: '/captcha/sent',
-      data: {
-        phone: uphone.value,
-      },
-    })
-    console.log('res: ', typeof res, res)
+    const res: SentCaptchaResponse = await reqSentCaptcha(uphone.value.toString())
+    // console.log('res: ', typeof res, res)
     if (res.code == 200) {
       Notify({ type: 'success', message: '验证码发送成功，如未收到,60s后可重发', top: statusBarHeight })
       disableSms.value = true
@@ -135,7 +132,7 @@ const sendSms = async () => {
     } else {
       Notify({ message: res.message || '错误1', top: statusBarHeight })
     }
-  } catch (e) {
+  } catch (e: any) {
     //TODO handle the exception
     console.log(e)
     Notify({ message: e || '错误2', top: statusBarHeight })
@@ -146,7 +143,7 @@ const login = async () => {
   //表单校验
   try {
     await validate({ smsFlag: true })
-  } catch (e) {
+  } catch (e: any) {
     Notify({ message: e || '错误', top: statusBarHeight })
     return
   }
@@ -155,16 +152,11 @@ const login = async () => {
     //验证码登录
     if (tabIdx.value == 0) {
       //验证验证码是否有误
-      const res1 = await request({
-        url: '/captcha/verify',
-        data: {
-          phone: uphone.value,
-          captcha: sms.value,
-        },
-      })
+
+      const res1: VerifyCaptchaResponse = reqVerifyCaptcha(uphone.value, sms.value as number)
       console.log('验证验证码：', res1)
       if (res1.code !== 200) {
-        Notify({ message: res1.message, top: statusBarHeight })
+        Notify({ type: 'warning', message: res1.message as string, top: statusBarHeight })
         throw new Error(res1.message)
       }
       //验证码成功
@@ -191,7 +183,7 @@ const login = async () => {
     uni.switchTab({
       url: '/pages/me/me',
     })
-  } catch (e) {
+  } catch (e: any) {
     // console.log('e: ', e)
     Notify({ message: e.message || '错误', top: statusBarHeight })
     // console.log('验证失败')
@@ -206,15 +198,15 @@ const validate = ({ smsFlag = true }) => {
   return new Promise((resolve, reject) => {
     const phoneReg = /^1[3-9]\d{9}$/
     //验证码登录验证
-    if (tabIdx.value == '0') {
-      if (phoneReg.test(uphone.value.trim())) {
+    if (tabIdx.value.toString() == '0') {
+      if (phoneReg.test(uphone.value.toString().trim())) {
         phoneErrMsg.value = ''
       } else {
         phoneErrMsg.value = '手机号格式错误'
         reject('手机号格式错误')
       }
       if (smsFlag) {
-        if (sms.value.trim().length !== 4 || isNaN(sms.value.trim())) {
+        if (sms.value?.toString().trim().length !== 4 || isNaN(sms.value as number)) {
           smsErrMsg.value = '验证码格式错误'
           reject('验证码格式错误')
         } else {
@@ -224,7 +216,7 @@ const validate = ({ smsFlag = true }) => {
     }
     //账号登录验证
     if (tabIdx.value == 1) {
-      if (phoneReg.test(uphone.value.trim())) {
+      if (phoneReg.test(uphone.value.toString().trim())) {
         phoneErrMsg.value = ''
       } else {
         phoneErrMsg.value = '手机号格式错误'

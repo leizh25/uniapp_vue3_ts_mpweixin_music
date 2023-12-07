@@ -1,30 +1,33 @@
 <template>
   <div class="rect_music_box" @click="goPage(songList.resourceId)">
     <!-- <img :src="songList.imageUrl" class="img" lazy-load="true" /> -->
-    <van-image use-loading-slot :src="songList.imageUrl" class="img" lazy-load width="100%" height="100%">
+    <van-image use-loading-slot :src="songList.uiElement.image.imageUrl" class="img" lazy-load width="100%" height="100%">
       <van-loading slot="loading" type="spinner" size="20" vertical />
     </van-image>
 
-    <!-- <mina-lazy-image :src="songList.imageUrl" class="img" /> -->
-    <text class="text">{{ songList.title }}</text>
+    <span class="text van-multi-ellipsis--l2">{{ songList.uiElement.mainTitle.title }}</span>
     <div class="count_box" v-if="!showSlot">
       <van-icon name="play" style="transform: translateX(3px)" />
-      {{ parseInt(songList.playCount / 10000) + '万' }}
+      {{ parseInt((songList.resourceExtInfo.playCount / 10000).toString()) + '万' }}
     </div>
     <div class="slot" v-else>
-      <view class="van-multi-ellipsis--l2">
-        <slot></slot>
-      </view>
+      <slot></slot>
     </div>
   </div>
 </template>
-<script setup>
-import {  onMounted } from 'vue'
-const props = defineProps(['songList', 'showSlot', 'to'])
+<script setup lang="ts">
+import { onMounted } from 'vue'
+import type { resource3_1 } from '@/api/index/type'
+
+const props = defineProps<{
+  songList: resource3_1
+  showSlot: Boolean
+  to: String
+}>()
 onMounted(() => {
   // console.log('props.songList: ', props.songList)
 })
-const goPage = (resourceId) => {
+const goPage = (resourceId: string) => {
   if (props.to === 'songlist') {
     uni.navigateTo({
       url: '/pages/songList/songList?songListId=' + resourceId,

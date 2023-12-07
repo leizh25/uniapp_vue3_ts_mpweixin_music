@@ -5,7 +5,7 @@
       <!-- <div class="title_box" :style="{ width: 375 - systemInfoStore.custom.width - 20 + 'px' }"> -->
       <div class="title_box">
         <van-icon name="arrow-left" size="20px" @click="goBack" />
-        <span class="text">{{ mv.name }}</span>
+        <span class="text">{{ mv?.name }}</span>
         <div class="zhanwei"></div>
       </div>
     </div>
@@ -14,16 +14,16 @@
       <video id="video" :src="url" controls></video>
     </div>
     <!-- 滚动视图 -->
-    <scroll-view scroll-y="true" class="scroll_view" :style="{ height: systemInfoStore.safeArea.height - systemInfoStore.navigationBarHeight - 210 - 10 + 'px' }">
+    <scroll-view :scroll-y="true" class="scroll_view" :style="{ height: systemInfoStore.safeArea!.height! - systemInfoStore.navigationBarHeight! - 210 - 10 + 'px' }">
       <!-- 作者 -->
       <div class="author_wrapper">
         <div class="left">
           <img src="" alt="" class="img" />
           <div class="author_box">
-            <div class="author">{{ mv.artistName }}</div>
+            <div class="author">{{ mv?.artistName }}</div>
             <div class="count">
-              <text class="text">100万粉丝</text>
-              <text class="text">89视频</text>
+              <span class="text">100万粉丝</span>
+              <span class="text">89视频</span>
             </div>
           </div>
         </div>
@@ -36,16 +36,16 @@
       <div class="info_wrapper">
         <div class="mv_title_wrapper">
           <img src="/static/img/playingvideo/mv.png" class="img" />
-          <span>{{ mv.name }}</span>
+          <span>{{ mv?.name }}</span>
         </div>
         <div class="attach_song">
           <div class="song_name" @click="goPage">
             <img src="/static/img/playingvideo/yinfu.png" alt="" class="img" />
-            <span class="text">{{ mv.name }}-{{ mv.artistName }}</span>
+            <span class="text">{{ mv?.name }}-{{ mv?.artistName }}</span>
           </div>
           <div class="mv_info">
-            <span class="text">{{ parseInt(mv.playCount / 10000) }}万次播放</span>
-            <span class="text">{{ mv.publishTime }}</span>
+            <span class="text">{{ parseInt((mv?.playCount! / 10000).toString()) }}万次播放</span>
+            <span class="text">{{ mv?.publishTime }}</span>
           </div>
         </div>
       </div>
@@ -53,15 +53,15 @@
       <div class="operation_wrapper">
         <div class="btn_box">
           <img src="/static/img/playingvideo/shoucang.png" class="img" />
-          <div class="text">{{ operationCounts.likedCount }}</div>
+          <div class="text">{{ operationCounts?.likedCount }}</div>
         </div>
         <div class="btn_box">
           <img src="/static/img/playingvideo/zhuanfa.png" class="img" />
-          <div class="text">{{ operationCounts.shareCount }}</div>
+          <div class="text">{{ operationCounts?.shareCount }}</div>
         </div>
         <div class="btn_box">
           <img src="/static/img/playingvideo/pinglun.png" class="img" />
-          <div class="text">{{ operationCounts.commentCount }}</div>
+          <div class="text">{{ operationCounts?.commentCount }}</div>
         </div>
         <div class="btn_box">
           <img src="/static/img/playingvideo/dianzan.png" class="img" />
@@ -77,22 +77,24 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
-import { useSystemInfoStore } from '@/stores/systeminfo.js'
+import { useSystemInfoStore } from '@/stores/systemInfo'
 import longVideoBox from '@/components/long-video-box.vue'
 import { onLoad } from '@dcloudio/uni-app'
 import { request } from '@/utils/request'
+import { reqMvDetail, reqMvUrl, reqSemiMv, reqMvPrimeInfo } from '@/api/playingvideo'
+import type { MvDetailResponse, MvUrlResponse, SemiMvResponse, mv, MvPrimeInfoResponse, MvData } from '@/api/playingvideo/type'
 import Notify from '@/wxcomponents/@vant/weapp/notify/notify'
 
 const systemInfoStore = useSystemInfoStore()
 // console.log('systemInfoStore: ', systemInfoStore)
-const mv = ref({})
-const url = ref({})
-const simiMVs = ref([])
-const operationCounts = ref({})
+const mv = ref<MvData>()
+const url = ref<string>()
+const simiMVs = ref<mv[]>([])
+const operationCounts = ref<MvPrimeInfoResponse>()
 const songId = ref('')
-onLoad(async (e = { mvid: 5404608 }) => {
+onLoad(async (e: any) => {
   //   console.log('onLoadplayingvideo:', e.mvid)
   songId.value = e.songId || ''
   init(e.mvid)
@@ -103,7 +105,7 @@ onLoad(async (e = { mvid: 5404608 }) => {
  * @param {number} mvid MVID
  * @param {boolean} flag 是否刷新MV信息
  */
-const init = async (mvid, flag = false) => {
+const init = async (mvid: string, flag = false) => {
   try {
     await getMvDetail(mvid)
   } catch (error) {
@@ -141,60 +143,46 @@ const goBack = () => {
   uni.navigateBack()
 }
 //获取mv详情
-const getMvDetail = async (mvid) => {
-  const res = await request({
-    url: '/mv/detail',
-    data: {
-      mvid,
-    },
-  })
-  if (res.code === 200) {
-    mv.value = res.data
-  } else {
-    // Notify({
-    //   message: 'MV信息加载失败,请重试',
-    //   type: 'danger',
-    // })
+const getMvDetail = async (mvid: string) => {
+  try {
+    const res: MvDetailResponse = await reqMvDetail(mvid)
+    if (res.code === 200) {
+      mv.value = res.data
+    } else {
+      throw new Error(`${res}`)
+    }
+  } catch (error) {
+    console.log('error: ', error)
+    Notify({ message: 'MV信息加载失败,请重试', type: 'danger' })
   }
 }
 //获取mv播放地址
-const getMvUrl = async (mvid) => {
-  const res = await request({
-    url: '/mv/url',
-    data: {
-      id: mvid,
-      // r: mv.value.brs[0]?.br || 1080,
-    },
-  })
-  if (res.code === 200) {
-    url.value = res.data.url
-  } else {
+const getMvUrl = async (mvid: string) => {
+  try {
+    const res: MvUrlResponse = await reqMvUrl(mvid)
+    if (res.code === 200) {
+      url.value = res.data.url
+    } else {
+      throw new Error(`${res}`)
+    }
+  } catch (error) {
     console.log('MV播放加载失败,请重试')
-    console.log(res)
-    // Notify({
-    //   message: 'MV播放加载失败,请重试',
-    //   type: 'danger',
-    // })
+    Notify({
+      message: 'MV播放加载失败,请重试',
+      type: 'danger',
+    })
   }
 }
 //获取相似MV
-const getSimiMV = async (mvid) => {
-  const res = await request({
-    url: '/simi/mv',
-    data: {
-      mvid,
-    },
-  })
+const getSimiMV = async (mvid: string) => {
+  const res: SemiMvResponse = await reqSemiMv(mvid)
   if (res.code === 200) {
     simiMVs.value = res.mvs
   }
 }
 //获取mv评论转发点赞数据
-const getoperationCounts = async (mvid) => {
-  const res = await request({
-    url: '/mv/detail/info',
-    data: { mvid },
-  })
+const getoperationCounts = async (mvid: string) => {
+  const res: MvPrimeInfoResponse = await reqMvPrimeInfo(mvid)
   if (res.code === 200) {
     operationCounts.value = res
   }

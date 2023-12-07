@@ -1,24 +1,12 @@
-<script setup>
+<script setup lang="ts">
 import { onLaunch, onShow, onHide } from '@dcloudio/uni-app'
-import { useSystemInfoStore } from '@/stores/systemInfo.js'
-import { useIndexDataStore } from '@/stores/indexData.js'
-import { usePlayingStore } from '@/stores/playing.js'
+import { useSystemInfoStore } from '@/stores/systemInfo'
+import { usePlayingStore } from '@/stores/playing'
 
 onLaunch(async () => {
   console.log('App Launch')
   await useSystemInfoStore().init()
-  await useIndexDataStore().init()
   await usePlayingStore().init()
-  const indexDataStore = useIndexDataStore()
-  //   console.log('useIndexDataStore(): ', useIndexDataStore())
-  for (const key in indexDataStore) {
-    if (Object.hasOwnProperty.call(indexDataStore, key)) {
-      const element = indexDataStore[key]
-      if (key.startsWith('HOMEPAGE') && JSON.stringify(element) !== '{}') {
-        console.log(key, indexDataStore[key])
-      }
-    }
-  }
 })
 onShow(() => {
   console.log('App Show')

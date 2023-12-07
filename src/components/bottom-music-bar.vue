@@ -3,11 +3,11 @@
     <div class="relative_box">
       <div class="disk_box">
         <van-circle class="circle" :value="playingStore.progressPercent" layer-color="#eeeeee" color="#ee0a24" size="41" />
-        <img :src="playingStore.singing.imageUrl" class="img" v-if="playingStore.singing.imageUrl" />
+        <img :src="playingStore.playingSongInfo.al.picUrl" class="img" v-if="playingStore.playingSongInfo.al?.img1v1Url" />
         <img src="/static/img/disk.png" class="img" v-else />
       </div>
       <div class="title">
-        <span class="text">{{ playingStore.songInfo.name ? playingStore.songInfo.name + ' - ' + playingStore.songInfo.ar?.map((item) => item.name).join('、') : '播放列表为空' }}</span>
+        <span class="text">{{ playingStore.playingSongInfo.name ? playingStore.playingSongInfo.name + ' - ' + playingStore.playingSongInfo.ar?.map((item) => item.name).join('、') : '播放列表为空' }}</span>
       </div>
       <div class="prev_next_box">
         <img src="/static/img/bottom_music_bar/bofang.png" class="img" v-if="!playingStore.isPlaying" @click.stop="play" />
@@ -19,17 +19,17 @@
     </div>
   </div>
 </template>
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import { usePlayingStore } from '@/stores/playing'
 const playingStore = usePlayingStore()
 // import { useSystemInfoStore } from '/stores/systeminfo.js'
 // const SystemInfoStore = useSystemInfoStore()
 const touch = ref(false)
-const touchstart = (e) => {
+const touchstart = () => {
   touch.value = true
 }
-const touchend = (e) => {
+const touchend = () => {
   touch.value = false
 }
 const goPage1 = () => {
@@ -40,11 +40,9 @@ const goPage1 = () => {
 }
 const play = () => {
   if (playingStore.isPlaying) {
-    playingStore.isPlaying = false
-    playingStore.bgAudioManager.pause()
+    playingStore.pause()
   } else {
-    playingStore.isPlaying = true
-    playingStore.bgAudioManager.play()
+    playingStore.play()
   }
 }
 const showSongListSheet = () => {

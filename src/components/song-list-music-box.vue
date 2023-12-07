@@ -1,5 +1,5 @@
 <template>
-  <div class="song_box" :class="{ active: isActive }" @touch="goPlay(music)" @longpress="active(true)" @touchend="active(false)">
+  <div class="song_box" @click="goPlay(music)" hover-class="active" hover-stop-propagation>
     <div class="index_box">
       <van-icon name="volume-o" size="20" v-if="false" />
       <div class="text" v-else>{{ n }}</div>
@@ -8,10 +8,10 @@
       <div class="song_name van-ellipsis">{{ music.name }}</div>
       <div class="song_album">
         <van-icon name="vip-card-o" size="17" class="icon" color="#f00" v-if="music.fee == 1" />
-        <div class="song_info">{{ music.ar.map((item) => item.name).join('、') }}-{{ music.al.name }}</div>
+        <div class="song_info van-ellipsis">{{ music.ar?.map((item) => item.name).join('、') }}-{{ music.al?.name }}</div>
       </div>
     </div>
-    <div class="video_btn_box" v-if="music.mv" @click="goVideo(music.mv, music.id)">
+    <div class="video_btn_box" v-if="music.mv" @click.stop="goVideo(music.mv.toString(), music.id?.toString() as string)">
       <img src="/static/img/shipingbofang.png" class="img" />
     </div>
     <div class="menu_btn_box">
@@ -21,27 +21,28 @@
     </div>
   </div>
 </template>
-<script setup>
-import {  onMounted, ref } from 'vue'
-import { usePlayingStore } from '@/stores/playing.js'
+<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import { usePlayingStore } from '@/stores/playing'
+import type { song } from '@/api/index/type'
 const playingStore = usePlayingStore()
-const props = defineProps(['music', 'n'])
-const isActive = ref(false)
-
+const props = defineProps<{
+  music: song
+  n: number
+}>()
 onMounted(() => {
   // console.log('props.music: ', props.music)
 })
-const active = (flag) => {
-  if (flag) isActive.value = true
-  else isActive.value = false
-}
-const goVideo = (mvid, songid) => {
+
+const goVideo = (mvid: string, songid: string) => {
   uni.navigateTo({
     url: `/pages/playingvideo/playingvideo?mvid=${mvid}&songId=${songid}`,
   })
 }
-const goPlay = (music) => {
-  playingStore.singing = music
+const goPlay = (music: song) => {
+  console.log("goplay");
+  
+  playingStore.playNextSong(music.id?.toString())
   uni.navigateTo({
     url: `/pages/playing/playing`,
   })

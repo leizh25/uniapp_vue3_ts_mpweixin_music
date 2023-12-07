@@ -1,41 +1,44 @@
 <template>
   <div class="long_music_box" @click="goPage(1, music)" :class="{ touch: isTouching }" @longtap="isTouching = true" @touchend="isTouching = false">
-    <img :src="music.imageUrl" class="img" lazy-load="true"/>
+    <img :src="music.uiElement.image.imageUrl" class="img" lazy-load="true" />
     <div class="desc_box">
-      <div class="desc" :style="{ width: music.mvid ? '212px' : '242px' }">
-        <div class="singer" v-if="music.singer">{{ music.singer }}</div>
-        <div class="name">{{ music.songName }}</div>
+      <div class="desc" :style="{ width: music.resourceExtInfo.songData.mvid ? '212px' : '242px' }">
+        <!-- <div class="singer" v-if="music.resourceExtInfo.artists.length != 0">{{ music.resourceExtInfo.artists.map(item => item.name).join("、") }}</div> -->
+        <div class="name">{{ music.resourceExtInfo.song.name }}</div>
         <div class="bottom">
-          <div class="tag" v-if="music.subTitle">
-            <span class="text">{{ music.subTitle }}</span>
+          <div class="tag" v-if="music.uiElement.subTitle?.title">
+            <span class="text">{{ music.uiElement.subTitle?.title }}</span>
           </div>
-          <text class="author">{{ music.songAr.map((item) => item.name).join('、') }}</text>
+          <span class="author">{{ music.resourceExtInfo.artists.map((item) => item.name).join('、') }}</span>
         </div>
       </div>
     </div>
-    <div class="play_box" v-if="music.mvid" @click.stop="goPage(2, music)">
+    <div class="play_box" v-if="music.resourceExtInfo.songData.mvid" @click.stop="goPage(2, music)">
       <img src="/static/img/shipingbofang.png" class="img" />
     </div>
   </div>
 </template>
-<script setup>
-import { onMounted,  ref } from 'vue'
-import { usePlayingStore } from '@/stores/playing.js'
+<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import { usePlayingStore } from '@/stores/playing'
+import type { resource4_1 } from '@/api/index/type'
 const playingStore = usePlayingStore()
-const props = defineProps(['music'])
+const props = defineProps<{
+  music: resource4_1
+}>()
 const isTouching = ref(false)
-const goPage = (n, music) => {
+const goPage = (n: number, music: resource4_1) => {
   console.log('music: ', music)
   if (n === 1) {
     console.log('跳转音乐')
     uni.navigateTo({
       url: '/pages/playing/playing',
     })
-    playingStore.singing = music
+    playingStore.playNextSong(music.resourceId)
   } else if (n === 2) {
     console.log('跳转视频')
     uni.navigateTo({
-      url: `/pages/playingvideo/playingvideo?mvid=${music.mvid}&songId=${music.resourceId}`,
+      url: `/pages/playingvideo/playingvideo?mvid=${music.resourceExtInfo.songData.mvid}&songId=${music.resourceId}`,
     })
   }
 }

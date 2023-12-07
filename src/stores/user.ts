@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
-import { request } from '@/utils/request'
-
+import { reqLogin } from '@/api/login'
+import type { LoginResponse } from '@/api/login/type'
 export const useUserStore = defineStore('user', {
   state: () => {
     return {
@@ -13,27 +13,18 @@ export const useUserStore = defineStore('user', {
     }
   },
   actions: {
-    async login(type, data) {
-      let res = ''
+    async login(type: 1 | 2, data: any) {
       console.log(`执行类型${type}登录`)
+      let res: LoginResponse
       //验证码登录, 密码登录
       if (type === 1) {
-        res = await request({
-          url: '/login/cellphone',
-          data,
-          method: 'get',
-        })
+        res = (await reqLogin(1, data)) as LoginResponse
       }
       //邮箱登录
       if (type === 2) {
         console.log(data)
-        res = await request({
-          url: '/login',
-          data,
-          method: 'post',
-        })
+        res = (await reqLogin(2, data)) as LoginResponse
       }
-    //   console.log('res: ', res)
       if (res.code === 200) {
         this.userinfo = res
         uni.setStorage({
@@ -49,17 +40,5 @@ export const useUserStore = defineStore('user', {
         return Promise.reject(res.message || '错误')
       }
     },
-    // async getSmsCode(data) {
-    //   const res = await request({
-    //     url: '/captcha/sent',
-    //     data,
-    //     method: 'get',
-    //   })
-    //   if (res.code == 200) {
-    //     return true
-    //   } else {
-    //     return Promise.reject(res.message)
-    //   }
-    // },
   },
 })

@@ -1,10 +1,10 @@
 <template>
-  <div id="playing_wrapper" :style="{ backgroundImage: `url(${playingStore.singing.imageUrl})` }">
+  <div id="playing_wrapper" :style="{ backgroundImage: `url(${playingStore.playingSongInfo.al?.picUrl})` }">
     <div class="bg" :style="{ paddingTop: systemInfoStore.statusBarHeight + 'px' }">
       <!-- 标题 -->
       <div class="title_bar" :style="{ height: systemInfoStore.navigationBarHeight + 'px' }">
         <div class="back_btn" @click="goBack"><van-icon name="arrow-left" size="20px" /></div>
-        <div class="title">{{ playingStore.songInfo.name }}</div>
+        <div class="title">{{ playingStore.playingSongInfo.name }}</div>
       </div>
       <!-- 磁盘 -->
 
@@ -17,20 +17,20 @@
             </div>
             <div class="disk">
               <div class="img_wrapper" :class="{ rotate: playingStore.isPlaying }">
-                <img src="/static/img/playing/disc.png" class="img" :style="{ backgroundImage: `url(${playingStore.singing.imageUrl})` }" />
+                <img src="/static/img/playing/disc.png" class="img" :style="{ backgroundImage: `url(${playingStore.playingSongInfo.al?.picUrl})` }" />
               </div>
             </div>
             <div class="lyric_tip_wrapper" v-show="playingStore.isShowLyricsTip" @click="closeLyricsTip">
-              <text class="text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;左划显示歌词&nbsp;&nbsp;>></text>
-              <text class="text2">&nbsp;&nbsp;点击关闭提示</text>
+              <span class="text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;左划显示歌词&nbsp;&nbsp;>></span>
+              <span class="text2">&nbsp;&nbsp;点击关闭提示</span>
             </div>
           </div>
         </swiper-item>
         <swiper-item class="swiper_item2">
           <div class="lrc_wrapper">
-            <scroll-view scroll-y="true" class="scroll_view" :scroll-top="playingStore.lrcScrollTop" scroll-with-animation="true">
+            <scroll-view :scroll-y="true" class="scroll_view" :scroll-top="playingStore.lrcScrollTop" :scroll-with-animation="true">
               <div v-for="item in 4" :key="item" class="lrc_item"></div>
-              <div v-if="playingStore.processedLrc" v-for="(item, key, index) in playingStore.processedLrc" :key="index" class="lrc_item" :class="{ active: playingStore.lrcScrolledCount == index }">{{ item }}</div>
+              <div v-if="playingStore.processedLrc.lrcText" v-for="(item, key, index) in playingStore.processedLrc.lrcText" :key="index" class="lrc_item" :class="{ active: playingStore.lrcScrolledCount == index }">{{ item }}</div>
               <div v-else class="lrc_item">暂无歌词</div>
               <div v-for="item in 4" :key="item" class="lrc_item"></div>
             </scroll-view>
@@ -43,12 +43,12 @@
       <div class="info_wrapper">
         <div class="info">
           <div class="songName_wrapper">
-            <text class="songName">
-              {{ playingStore.songInfo.name }}
-            </text>
-            <img src="/static/img/playing/vip.png" class="img" v-if="playingStore.songInfo.fee == 1" />
+            <span class="songName">
+              {{ playingStore.playingSongInfo.name }}
+            </span>
+            <img src="/static/img/playing/vip.png" class="img" v-if="playingStore.playingSongInfo.fee == 1" />
           </div>
-          <div class="artist">{{ playingStore.songInfo.ar?.map((item) => item.name).join('、') }}</div>
+          <div class="artist">{{ playingStore.playingSongInfo.ar?.map((item) => item.name).join('、') }}</div>
         </div>
         <div class="like_wrapper">
           <van-icon name="like-o" size="25px" />
@@ -63,15 +63,15 @@
       <!-- 进度条 -->
       <div class="progress_wrapper">
         <div class="progress_box">
-          <div class="valid_dot" :style="validProgressObj" v-if="playingStore.songInfo.fee == 1"></div>
+          <div class="valid_dot" :style="validProgressObj" v-if="playingStore.playingSongInfo.fee == 1"></div>
           <!-- <van-progress :percentage="progress" show-pivot="false" /> -->
           <van-slider class="slider" :value="playingStore.progressPercent" use-button-slot @drag="onSliderDrag">
-            <view class="custom-button" slot="button">{{ playingStore.progressPercent }}</view>
+            <div class="custom-button" slot="button">{{ playingStore.progressPercent }}</div>
           </van-slider>
         </div>
         <div class="time_box">
-          <text class="time">{{ progressTime }}</text>
-          <text class="time">{{ duration }}</text>
+          <span class="time">{{ progressTime }}</span>
+          <span class="time">{{ duration }}</span>
         </div>
       </div>
       <!-- 操作栏 -->
@@ -118,48 +118,54 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted, computed, watch, reactive } from 'vue'
-import { useSystemInfoStore } from '@/stores/systemInfo.js'
-import { usePlayingStore } from '@/stores/playing.js'
+import { useSystemInfoStore } from '@/stores/systemInfo'
+import { usePlayingStore } from '@/stores/playing'
 import songListSheet from '@/components/song-list-sheet.vue'
+import _ from 'lodash-es'
+import throttle from '@/utils/throttle'
+import debounce from '@/utils/debounce'
 const playingStore = usePlayingStore()
 const systemInfoStore = useSystemInfoStore()
-
 // const isPlaying = playingStore.isPlaying
 onMounted(async () => {
-  try {
-    await playingStore.getDetail()
-  } catch (error) {
-    return
-  }
-  try {
-    await playingStore.getSongUrl()
-    playingStore.play()
-  } catch (error) {}
-  try {
-    await playingStore.getLrc()
-    // console.log(playingStore.processedLrc)
-  } catch (error) {}
-  console.log('playingStore:', playingStore)
+  // try {
+  //   await playingStore.getDetail()
+  // } catch (error) {
+  //   return
+  // }
+  // try {
+  //   await playingStore.getSongUrl()
+  //   playingStore.play()
+  // } catch (error) {}
+  // try {
+  //   await playingStore.getLrc()
+  //   // console.log(playingStore.processedLrc)
+  // } catch (error) {}
+  // console.log('playingStore:', playingStore)
 })
 // 关闭显示歌词函数
-const closeLyricsTip = computed(() => {
+const closeLyricsTip: any = computed(() => {
   playingStore.isShowLyricsTip = false
 })
 // 歌曲时长
 const duration = computed(() => {
-  return parseInt(playingStore.songInfo.dt / 60000) + ':' + (parseInt((playingStore.songInfo.dt % 60000) / 1000).toString().length == 1 ? '0' + parseInt((playingStore.songInfo.dt % 60000) / 1000) : parseInt((playingStore.songInfo.dt % 60000) / 1000))
+  return (
+    parseInt((playingStore.playingSongInfo.dt! / 60000).toString()) +
+    ':' +
+    (parseInt(((playingStore.playingSongInfo.dt! % 60000) / 1000).toString()).toString().length == 1 ? '0' + parseInt(((playingStore.playingSongInfo.dt! % 60000) / 1000).toString()) : parseInt(((playingStore.playingSongInfo.dt! % 60000) / 1000).toString()))
+  )
 })
 // const validProgress = parseInt((playingStore.validDuration * 1000) / playingStore.songInfo.dt)
-const validProgressObj = reactive({ left: 0 })
+const validProgressObj = reactive({ left: '' })
 watch(
   () => playingStore.validDuration,
   (newVal) => {
     console.log('newVal: ', newVal)
-    validProgressObj.left = parseInt(parseInt(newVal * 1000) / playingStore.songInfo.dt) * 100 + '%'
+    validProgressObj.left = parseInt((parseInt((newVal * 1000).toString()) / playingStore.playingSongInfo.dt!).toString()) * 100 + '%'
     // console.log('(newVal * 1000): ', newVal * 1000)
-    console.log('playingStore.songInfo.dt: ', playingStore.songInfo.dt)
+    console.log('playingStore.songInfo.dt: ', playingStore.playingSongInfo.dt)
     // console.log('parseInt(parseInt(newVal * 1000) / playingStore.songInfo.dt) * 100 ', parseInt(parseInt(newVal * 1000) / playingStore.songInfo.dt) * 100)
 
     console.log('validProgressObj.left: ', validProgressObj.left)
@@ -174,8 +180,8 @@ watch(
   () => playingStore.currentTime,
   (newValue) => {
     // progress.value = parseInt(((newValue * 1000) / playingStore.songInfo.dt) * 100)
-    let m = parseInt(newValue / 60)
-    let s = parseInt(newValue % 60).toString().length == 1 ? '0' + parseInt(newValue % 60) : parseInt(newValue % 60)
+    let m = parseInt((newValue / 60).toString())
+    let s = parseInt((newValue % 60).toString()).toString().length == 1 ? '0' + parseInt((newValue % 60).toString()) : parseInt((newValue % 60).toString())
     progressTime.value = m + ':' + s
 
     // validProgress.value = parseInt((playingStore.validDuration * 1000) / playingStore.songInfo.dt)
@@ -192,29 +198,32 @@ const changeMode = () => {
   console.log('播放模式')
 }
 // 上一首
-const playPrev = () => {
+const playPrev = _.throttle(() => {
   console.log('上一首')
-}
+  playingStore.playPrevSong()
+}, 3000)
 
 // 播放暂停
-const playPause = () => {
+const playPause = debounce(() => {
   if (!playingStore.isPlaying) {
     playingStore.play()
   } else {
     playingStore.pause()
   }
-}
+}, 300)
+
 // 下一首
-const playNext = () => {
+const playNext = throttle(() => {
   console.log('下一首')
-}
+  playingStore.playNextSong()
+}, 3000)
 // 播放列表
 const showMenu = () => {
   console.log('播放列表')
   playingStore.isShowSongListSheet = true
 }
 // 进度条拖动事件
-const onSliderDrag = (e) => {
+const onSliderDrag = (e: any) => {
   console.log('进度条拖动事件')
   // playingStore.seek(e.detail.value)
   console.log('e.detail.value: ', e.detail.value)

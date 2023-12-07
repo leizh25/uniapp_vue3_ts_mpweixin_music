@@ -11,16 +11,16 @@
       </div>
       <div class="info_box">
         <div class="nickname">
-          <text class="name">{{ userStore.userinfo.profile.nickname }}</text>
+          <span class="name">{{ userStore.userinfo.profile.nickname }}</span>
           <div class="vip">
             <img src="/static/img/vip.png" style="width: 100%; height: 100%" v-if="!userStore.userinfo.profile.vipType" />
             <img src="/static/img/vip-true.png" style="width: 100%; height: 100%" v-else />
           </div>
         </div>
         <div class="concern_box">
-          <text class="text">{{ userStore.userinfo.profile.follows }} 关注</text>
-          <text class="text">{{ userStore.userinfo.profile.followeds }} 粉丝</text>
-          <text class="text">Lv.0</text>
+          <span class="text">{{ userStore.userinfo.profile.follows }} 关注</span>
+          <span class="text">{{ userStore.userinfo.profile.followeds }} 粉丝</span>
+          <span class="text">Lv.0</span>
         </div>
       </div>
     </div>
@@ -52,7 +52,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useUserStore } from '@/stores/user'
 import { onShow } from '@dcloudio/uni-app'
@@ -88,7 +88,7 @@ onShow(() => {
 
   .go_login_button {
     height: 220px;
-    background-image: url('/static/img/me_bg.webp');
+    // background-image: url('/static/img/me_bg.webp');
     // background-image: url('/static/img/movie2.webp');
     background-size: cover;
     background-repeat: no-repeat;

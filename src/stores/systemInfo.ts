@@ -1,8 +1,9 @@
 // stores/counter.js
 import { defineStore } from 'pinia'
+import type { SystemInfoStore } from './type'
 
 export const useSystemInfoStore = defineStore('systemInfo', {
-  state: () => {
+  state: (): SystemInfoStore => {
     return {
       // 状态栏高度
       statusBarHeight: 0,
@@ -18,7 +19,7 @@ export const useSystemInfoStore = defineStore('systemInfo', {
       // 安全区域的边距
       safeAreaInsets: {},
       // 安全区域
-      safeArea:{}
+      safeArea: {},
     }
   },
   actions: {
@@ -26,11 +27,12 @@ export const useSystemInfoStore = defineStore('systemInfo', {
       console.log('uni.getSystemInfoSync(): ', uni.getSystemInfoSync())
       this.statusBarHeight = uni.getSystemInfoSync().statusBarHeight || 0
       this.custom = wx.getMenuButtonBoundingClientRect() || {}
-      this.navigationBarHeight = this.custom.height + (this.custom.top - this.statusBarHeight) * 2
+      console.log('this.custom: ', this.custom)
+      this.navigationBarHeight = this.custom.height! + (this.custom.top! - this.statusBarHeight) * 2
       this.navHeight = this.navigationBarHeight + this.statusBarHeight
-      console.log('this.navHeight: ', this.navHeight);
+      console.log('this.navHeight: ', this.navHeight)
       this.windowHeight = uni.getSystemInfoSync().windowHeight
-      console.log('this.windowHeight: ', this.windowHeight);
+      console.log('this.windowHeight: ', this.windowHeight)
       this.safeAreaInsets = uni.getSystemInfoSync().safeAreaInsets
       this.safeArea = uni.getSystemInfoSync().safeArea
     },

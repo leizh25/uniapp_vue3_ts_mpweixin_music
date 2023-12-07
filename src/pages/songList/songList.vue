@@ -11,65 +11,66 @@
       <!-- 歌单信息 -->
       <div class="info_wrapper">
         <div class="top_info">
-          <img :src="songListDetail.coverImgUrl" class="img" />
+          <img :src="songListDetail?.coverImgUrl" class="img" />
           <div class="right">
-            <div class="list_name">{{ songListDetail.name }}</div>
+            <div class="list_name">{{ songListDetail?.name }}</div>
             <div class="list_author">
-              <img :src="songListDetail.creator?.avatarUrl" class="img" />
-              <div class="author_name">{{ songListDetail.creator?.nickname }}</div>
+              <img :src="songListDetail?.creator?.avatarUrl" class="img" />
+              <div class="author_name">{{ songListDetail?.creator.nickname }}</div>
             </div>
             <div class="labels">
-              <div class="label" v-for="label in songListDetail.tags">{{ label }}</div>
+              <div class="label" v-for="label in songListDetail?.tags">{{ label }}</div>
             </div>
           </div>
         </div>
-        <div class="bottom_desc van-multi-ellipsis--l2">{{ songListDetail.description }}</div>
+        <div class="bottom_desc van-multi-ellipsis--l2">{{ songListDetail?.description }}</div>
         <div class="btns_wrapper">
           <div class="share_btn btn">
             <van-icon name="share" />
-            <span class="text">{{ songListDetail.shareCount }}</span>
+            <span class="text">{{ songListDetail?.shareCount }}</span>
           </div>
           <div class="comment_btn btn">
             <van-icon name="chat" />
-            <span class="text">{{ songListDetail.commentCount }}</span>
+            <span class="text">{{ songListDetail?.commentCount }}</span>
           </div>
           <div class="sub_btn btn">
             <van-icon name="send-gift" />
-            <span class="text">{{ songListDetail.subscribedCount }}</span>
+            <span class="text">{{ songListDetail?.subscribedCount }}</span>
           </div>
         </div>
       </div>
     </div>
     <!-- 歌曲列表 -->
     <div class="list_wrapper">
-      <scroll-view scroll-y="true" class="scroll_view" :style="{ height: systemInfoStore.windowHeight - systemInfoStore.navHeight + 'px' }">
+      <scroll-view :scroll-y="true" class="scroll_view" :style="{ height: systemInfoStore.windowHeight! - systemInfoStore.navHeight! + 'px' }">
         <!-- <scroll-view scroll-y="true" class="scroll_view"> -->
-        <songListMusicBox v-for="(item, index) in songListDetail.tracks" :key="index" :music="item" :n="index + 1"></songListMusicBox>
+        <songListMusicBox v-for="(item, index) in songListDetail?.tracks" :key="index" :music="item" :n="index + 1"></songListMusicBox>
       </scroll-view>
     </div>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import { useSystemInfoStore } from '@/stores/systemInfo'
-import { request } from '@/utils/request'
 import songListMusicBox from '@/components/song-list-music-box.vue'
+// import { reqSongDetail } from '@/api/playing'
+import { reqSonglistDetail } from '@/api/songlist'
+import type { SonglistDetailResponse, Playlist } from '@/api/songlist/type'
+import Notify from '@/wxcomponents/@vant/weapp/notify/notify'
 const systemInfoStore = useSystemInfoStore()
-const songListDetail = ref([])
-onLoad((e) => {
-  getSongListDetail(e.songListId)
+const songListDetail = ref<Playlist>()
+onLoad((e: any) => {
+  try {
+    getSongListDetail(e.songListId)
+  } catch (error) {
+    Notify({ type: 'danger', message: '加载失败,请重试', top: systemInfoStore.statusBarHeight })
+  }
 })
-// onMounted(() => {
-// })
-const getSongListDetail = async (id) => {
-  const res = await request({
-    url: '/playlist/detail',
-    data: {
-      id,
-    },
-  })
+
+const getSongListDetail = async (id: string) => {
+  const res: SonglistDetailResponse = await reqSonglistDetail(id)
   if (res.code === 200) {
     songListDetail.value = res.playlist
     console.log('songListDetail.value: ', songListDetail.value)
