@@ -123,7 +123,7 @@ import { ref, onMounted, computed, watch, reactive } from 'vue'
 import { useSystemInfoStore } from '@/stores/systemInfo'
 import { usePlayingStore } from '@/stores/playing'
 import songListSheet from '@/components/song-list-sheet.vue'
-import _ from 'lodash-es'
+// import _ from 'lodash-es'
 import throttle from '@/utils/throttle'
 import debounce from '@/utils/debounce'
 const playingStore = usePlayingStore()
@@ -162,13 +162,7 @@ const validProgressObj = reactive({ left: '' })
 watch(
   () => playingStore.validDuration,
   (newVal) => {
-    console.log('newVal: ', newVal)
-    validProgressObj.left = parseInt((parseInt((newVal * 1000).toString()) / playingStore.playingSongInfo.dt!).toString()) * 100 + '%'
-    // console.log('(newVal * 1000): ', newVal * 1000)
-    console.log('playingStore.songInfo.dt: ', playingStore.playingSongInfo.dt)
-    // console.log('parseInt(parseInt(newVal * 1000) / playingStore.songInfo.dt) * 100 ', parseInt(parseInt(newVal * 1000) / playingStore.songInfo.dt) * 100)
-
-    console.log('validProgressObj.left: ', validProgressObj.left)
+    validProgressObj.left = Math.floor(((newVal * 1000) / playingStore.playingSongInfo.dt!) * 100) + '%'
   },
 )
 //歌曲进度
@@ -198,7 +192,7 @@ const changeMode = () => {
   console.log('播放模式')
 }
 // 上一首
-const playPrev = _.throttle(() => {
+const playPrev = throttle(() => {
   console.log('上一首')
   playingStore.playPrevSong()
 }, 3000)
@@ -236,14 +230,14 @@ const onSliderDrag = (e: any) => {
   max-height: 100vh;
   background-color: #999;
   box-sizing: border-box;
-  background-size: cover;
+  background-size: 100% 100%;
   overflow: hidden;
   .bg {
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 100%;
-    backdrop-filter: blur(300px);
+    backdrop-filter: blur(400px);
     // padding: 12px;
     box-sizing: border-box;
     // 标题栏
@@ -487,7 +481,7 @@ const onSliderDrag = (e: any) => {
           transform: translateX(-50%);
           position: absolute;
           // left: 100%;
-          top: -20rpx;
+          top: -28rpx;
         }
         .slider {
           .custom-button {

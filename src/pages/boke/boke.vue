@@ -1,17 +1,14 @@
 <template>
-	<view>
+	<div>
 		<span>播客</span>
-	</view>
+		<bottomMusicBarVue></bottomMusicBarVue>
+	</div>
 </template>
 
-<script>
-	export default {
-		data() {
-			return {
-				
-			};
-		}
-	}
+<script setup lang="ts">
+import bottomMusicBarVue from '@/components/bottom-music-bar.vue';
+
+	
 </script>
 
 <style lang="less">

@@ -1,5 +1,6 @@
 import type { song } from '@/api/index/type'
 import type { SongDetailResponse } from '@/api/playing/type'
+import type { SonglistDetailResponse } from '@/api/songlist/type'
 // playing仓库类型定义
 export interface PlayingStore {
   playingId: number | string //当前播放音乐的ID
@@ -31,7 +32,9 @@ export interface PlayingStore {
  * 歌单仓库
  */
 export interface SonglistStore {
-  playlist: SongDetailResponse
+  playlist?: SongDetailResponse
+  songlistDetailRes: SonglistDetailResponse[] //歌单相应
+  songlistIds: string[] //歌单id
 }
 
 export interface SystemInfoStore {
@@ -62,6 +65,7 @@ export interface SystemInfoStore {
     width?: number
   }
 }
+
 /* 
 SDKVersion: '3.2.3'
   appId: '__UNI__782BBF6'

@@ -39,7 +39,7 @@ export interface br {
 export interface artist {
   id: number
   name: string
-  img1v1Url: null
+  img1v1Url: string
   followed: boolean
 }
 /**

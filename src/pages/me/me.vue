@@ -49,6 +49,8 @@
         <span class="text">0首</span>
       </div>
     </div>
+    <BottomMusicBar></BottomMusicBar>
+
   </div>
 </template>
 
@@ -56,6 +58,8 @@
 import { ref, onMounted } from 'vue'
 import { useUserStore } from '@/stores/user'
 import { onShow } from '@dcloudio/uni-app'
+import BottomMusicBar from '@/components/bottom-music-bar.vue'
+
 //用户信息
 const userStore = useUserStore()
 

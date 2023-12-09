@@ -18,7 +18,7 @@
       <!-- 作者 -->
       <div class="author_wrapper">
         <div class="left">
-          <img src="" alt="" class="img" />
+          <img :src="mv?.artists[0].img1v1Url" alt="" class="img" />
           <div class="author_box">
             <div class="author">{{ mv?.artistName }}</div>
             <div class="count">

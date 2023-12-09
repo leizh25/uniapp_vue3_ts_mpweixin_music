@@ -2,9 +2,16 @@
   <div class="bottom_music_bar" :class="{ touch: touch ? 'touch' : '' }" @click="goPage1" @longtap="touchstart" @touchend="touchend">
     <div class="relative_box">
       <div class="disk_box">
-        <van-circle class="circle" :value="playingStore.progressPercent" layer-color="#eeeeee" color="#ee0a24" size="41" />
-        <img :src="playingStore.playingSongInfo.al.picUrl" class="img" v-if="playingStore.playingSongInfo.al?.img1v1Url" />
-        <img src="/static/img/disk.png" class="img" v-else />
+        <van-circle class="circle" :value="playingStore.progressPercent" layer-color="#eeeeee" color="#ee0a24" size="41">
+          <template>
+            <img :src="playingStore.playingSongInfo.al.picUrl" class="img" v-if="playingStore.playingSongInfo.al?.picUrl" />
+            <img src="/static/img/disk.png" class="img" v-else />
+
+            <!-- <span>哈哈</span> -->
+          </template>
+        </van-circle>
+        <!-- <img :src="playingStore.playingSongInfo.al.picUrl" class="img" v-if="playingStore.playingSongInfo.al?.picUrl" />
+        <img src="/static/img/disk.png" class="img" v-else /> -->
       </div>
       <div class="title">
         <span class="text">{{ playingStore.playingSongInfo.name ? playingStore.playingSongInfo.name + ' - ' + playingStore.playingSongInfo.ar?.map((item) => item.name).join('、') : '播放列表为空' }}</span>
@@ -80,17 +87,22 @@ const showSongListSheet = () => {
       align-items: center;
       // position: relative;
       .circle {
-        position: absolute;
-        left: 9px;
-        bottom: -1px;
         // position: absolute;
         // left: 9px;
         // bottom: -1px;
-      }
-      .img {
-        width: 35px;
-        height: 35px;
-        border-radius: 50%;
+        // position: absolute;
+        // left: 9px;
+        // bottom: -1px;
+        float: left;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .img {
+          width: 33px;
+          height: 33px;
+          margin-top: 4px;
+          border-radius: 50%;
+        }
       }
     }
     .title {

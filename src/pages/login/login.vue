@@ -66,6 +66,7 @@ import { useUserStore } from '@/stores/user'
 import { useSystemInfoStore } from '@/stores/systemInfo'
 import { reqSentCaptcha, reqVerifyCaptcha } from '@/api/login'
 import type { SentCaptchaResponse, VerifyCaptchaResponse } from '@/api/login/type'
+
 const userStore = useUserStore()
 const systemInfoStore = useSystemInfoStore()
 const { statusBarHeight } = systemInfoStore
