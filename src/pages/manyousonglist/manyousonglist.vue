@@ -52,7 +52,7 @@
                 <div class="btn"><van-icon class="icon" name="ellipsis" size="20" @click.stop="openMenu(m)" /></div>
               </div>
             </div>
-            <div class="mask_wrapper">
+            <div class="mask_wrapper" @click="goSonglist(item.playlist?.id as number)">
               <span>点击查看更多 ></span>
             </div>
           </div>
@@ -151,6 +151,11 @@ const playvideo = (music: song) => {
 }
 const openMenu = (music: song) => {
   console.log('openMenu')
+}
+const goSonglist = (id: number) => {
+  uni.navigateTo({
+    url: `/pages/songList/songList?songListId=${id}`,
+  })
 }
 </script>
 
