@@ -217,6 +217,8 @@ const goBack = () => {
     background-color: #eee;
     //   padding: 0 10px;
     .scroll_view {
+      padding-bottom: 60px;
+      box-sizing: border-box;
     }
   }
 }

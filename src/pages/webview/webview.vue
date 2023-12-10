@@ -14,8 +14,8 @@ import { useSystemInfoStore } from '@/stores/systemInfo'
 const systemInfoStore = useSystemInfoStore()
 const url = ref('')
 onLoad((e: any) => {
-  // console.log(e)
-  url.value = e.url
+  console.log(e)
+  url.value = decodeURIComponent(e.url)
 })
 const onError = (event: any) => {
   //   console.log(event.detail)

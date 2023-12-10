@@ -51,7 +51,7 @@
           <div class="artist">{{ playingStore.playingSongInfo.ar?.map((item) => item.name).join('、') }}</div>
         </div>
         <div class="like_wrapper">
-          <van-icon name="like-o" size="25px" />
+          <!-- <van-icon name="like-o" size="25px" /> -->
           <van-icon name="like" size="25px" />
           <span class="text">123</span>
         </div>
@@ -78,7 +78,9 @@
       <div class="operation_wrapper">
         <div class="mode_box">
           <div class="btn_box" @click="changeMode">
-            <img src="/static/img/playing/suijibofang.png" class="img" />
+            <img src="/static/img/playing/suijibofang.png" class="img" v-if="playingStore.playingMode == 'random'" />
+            <img src="/static/img/playing/xunhuanbofang.png" class="img" v-if="playingStore.playingMode == 'circle'" />
+            <img src="/static/img/playing/shunxubofang.png" class="img" v-if="playingStore.playingMode == 'order'" />
             <!-- <img src="/static/img/playing/suijibofang.svg" class="img" /> -->
           </div>
         </div>
@@ -126,6 +128,7 @@ import songListSheet from '@/components/song-list-sheet.vue'
 // import _ from 'lodash-es'
 import throttle from '@/utils/throttle'
 import debounce from '@/utils/debounce'
+import Notify from '@/wxcomponents/@vant/weapp/notify/notify'
 const playingStore = usePlayingStore()
 const systemInfoStore = useSystemInfoStore()
 // const isPlaying = playingStore.isPlaying
@@ -190,6 +193,16 @@ const goBack = () => {
 // 播放模式
 const changeMode = () => {
   console.log('播放模式')
+  if (playingStore.playingMode == 'circle') {
+    playingStore.playingMode = 'order'
+    Notify({ type: 'success', message: '顺序播放模式', top: systemInfoStore.statusBarHeight })
+  } else if (playingStore.playingMode == 'order') {
+    playingStore.playingMode = 'random'
+    Notify({ type: 'success', message: '随机播放模式', top: systemInfoStore.statusBarHeight })
+  } else {
+    playingStore.playingMode = 'circle'
+    Notify({ type: 'success', message: '单曲循环模式', top: systemInfoStore.statusBarHeight })
+  }
 }
 // 上一首
 const playPrev = throttle(() => {

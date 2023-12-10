@@ -82,6 +82,8 @@ export const usePlayingStore = defineStore('playing', {
       } else {
         if (this.playingSongIdList.length == 1) {
           Notify({ type: 'warning', message: '播放列表只有一首歌', safeAreaInsetTop: true })
+          this.lrcScrollTop = 0
+          this.lrcScrolledCount = 0
         }
         if (this.playingMode === 'order') {
           // 顺序播放
@@ -138,10 +140,10 @@ export const usePlayingStore = defineStore('playing', {
         }
         const res: SongDetailResponse = await reqSongDetail(idstr as string)
         if (res.code == 200) {
-          this.playingSongList = res.songs
+          this.playingSongList = res.songs as song[]
           return true
         } else {
-          throw new Error(res.code.toString() + ': 播放列表详情失败')
+          throw new Error(res.code?.toString() + ': 播放列表详情失败')
         }
       } catch (error: any) {
         Notify({ type: 'danger', message: error?.message })

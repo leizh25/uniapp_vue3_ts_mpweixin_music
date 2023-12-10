@@ -1,5 +1,5 @@
 <template>
-  <div class="scroll_item" :style="{ backgroundImage: `url(${topic.uiElement.image.imageUrl})` }">
+  <div class="scroll_item" @click="goTopic(topic.resourceId)" :style="{ backgroundImage: `url(${topic.uiElement.image.imageUrl})` }">
     <div class="bg">
       <div class="inner_box">
         <div class="left">
@@ -28,6 +28,11 @@ const props = defineProps<{
 onMounted(() => {
   // console.log(props.topic)
 })
+const goTopic = (actId: string) => {
+  uni.navigateTo({
+    url: '/pages/topic/topic?actId=' + actId,
+  })
+}
 </script>
 <style lang="less">
 .scroll_item {

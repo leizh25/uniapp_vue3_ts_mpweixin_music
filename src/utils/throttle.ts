@@ -6,9 +6,9 @@ const throttle = (func: () => void, delay: number) => {
   return function (...args: any[]) {
     if (!timer) {
       //判断timer是否有值,如果没有则说明定时器不存在即可继续执行
+      func.apply(this, arguments)
       timer = setTimeout(() => {
         //关
-        func.apply(this, arguments)
         timer = null //开
       }, delay)
     }
