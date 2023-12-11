@@ -1,5 +1,5 @@
-export default function debounce(fn: () => void, wait = 200, isImmediate = true) {
-  let timer: null = null,
+export default function debounce(fn: (args?: any) => void, wait = 200, isImmediate = true) {
+  let timer: timer = null,
     flag = true
   if (isImmediate) {
     return function () {
@@ -20,3 +20,4 @@ export default function debounce(fn: () => void, wait = 200, isImmediate = true)
     }, wait)
   }
 }
+type timer = null | (() => void)
