@@ -1,5 +1,5 @@
 <template>
-  <scroll-view class="scroll_view" :scroll-y="true" refresher-enabled @refresherrefresh="onRefresh" :refresher-triggered="triggered" :style="{ height: height + 'px' }">
+  <scroll-view class="scroll_view" :scroll-y="true" refresher-enabled @refresherrefresh="onRefresh" :refresher-triggered="!!triggered" :style="{ height: height + 'px' }">
     <div class="songs_wrapper">
       <div class="song_box" v-for="item in playlists" :key="item.id" @click="goSonglist(item.id)">
         <div class="img_box">
@@ -18,13 +18,15 @@
 </template>
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue'
+import { onLoad } from '@dcloudio/uni-app'
 import { reqCateSongs } from '@/api/songlist_square'
 import type { CateSongsResponse, CateSonglist } from '@/api/songlist_square/types'
 import Notify from '@/wxcomponents/@vant/weapp/notify/notify'
 import { useSystemInfoStore } from '@/stores/systemInfo'
 import { useSonglistSquareStore } from '@/stores/songlist_square'
 const songlistSquareStore = useSonglistSquareStore()
-const triggered = ref<boolean>(false)
+const triggered = ref<boolean | string>(false)
+const isFreshing = ref<boolean>(false)
 const cateSongsResponse = ref<CateSongsResponse>()
 const playlists = ref<CateSonglist[]>([])
 const props = defineProps<{
@@ -32,19 +34,28 @@ const props = defineProps<{
   cat: string
   index: number
 }>()
-const onRefresh = () => {
-  console.log(1)
+onLoad(() => {
+  isFreshing.value = false
+})
+const onRefresh = async () => {
+  if (isFreshing.value) return
   triggered.value = true
+  isFreshing.value = true
+  await getData(true)
+  triggered.value = false
+  isFreshing.value = false
+  console.log(' isFreshing.value: ', isFreshing.value)
 }
+
 onMounted(() => {
   // console.log(props.cat)
   if (props.index == 0) {
     getData()
   }
 })
-const getData = async () => {
+const getData = async (refresh?: boolean) => {
   try {
-    const res: CateSongsResponse = await reqCateSongs({ cat: props.cat })
+    const res: CateSongsResponse = await reqCateSongs({ cat: props.cat, before: refresh ? (cateSongsResponse.value?.lasttime as number) : "" })
     if (res.code == 200) {
       cateSongsResponse.value = res
       playlists.value = res.playlists
@@ -73,9 +84,9 @@ const goSonglist = (id: number) => {
 .scroll_view {
   width: 100%;
   // height: 100%;
-  padding-bottom: 35px;
+  padding-bottom: 80px;
   box-sizing: border-box;
-  background-color: #bfa;
+  // background-color: #bfa;
   .songs_wrapper {
     width: 100%;
     // height: 100%;

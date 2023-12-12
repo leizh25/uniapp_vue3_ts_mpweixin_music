@@ -12,4 +12,4 @@ enum API {
  */
 export const reqHotCate = () => request<HotCateResponse>(API.HOT_CATE)
 
-export const reqCateSongs = (obj: { cat: string; limit?: number; before?: number }) => request<CateSongsResponse>(API.CATE_SONGS, Object.assign(obj, { limit: 30 }))
+export const reqCateSongs = (obj: { cat: string; limit?: number; before?: number | string }) => request<CateSongsResponse>(API.CATE_SONGS, Object.assign(obj, { limit: 30 }))
