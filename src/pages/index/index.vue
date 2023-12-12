@@ -16,14 +16,14 @@
       </div>
       <!-- 龙舟 -->
       <swiper class="swiper2" :display-multiple-items="indexDataStore.HOMEPAGE_BLOCK_OLD_DRAGON_BALL.creatives?.length && 5">
-        <swiper-item v-for="(item, index) in indexDataStore.HOMEPAGE_BLOCK_OLD_DRAGON_BALL.creatives?.[0].resources" :key="index">
+        <!-- <swiper-item v-for="(item, index) in indexDataStore.HOMEPAGE_BLOCK_OLD_DRAGON_BALL.creatives?.[0].resources" :key="index">
           <div class="item_box" @click="goPage('daily_recommend', 'param')">
             <img :src="item.uiElement.image.imageUrl2" class="img" />
             <div class="text">{{ item.uiElement.mainTitle?.title }}</div>
             <div class="date" v-if="item.uiElement.mainTitle?.title === '每日推荐'">{{ new Date().getDate() }}</div>
           </div>
-        </swiper-item>
-        <!-- <swiper-item>
+        </swiper-item> -->
+        <swiper-item>
           <div class="item_box" @click="goPage('daily_recommend', 'param')">
             <img src="/static/img/meirituijian.png" class="img" />
             <div class="text">每日推荐</div>
@@ -31,7 +31,7 @@
           </div>
         </swiper-item>
         <swiper-item>
-          <div class="item_box">
+          <div class="item_box" @click="goPage('songlist_square', 'param')">
             <img src="/static/img/gedan.png" class="img" />
             <div class="text">歌单</div>
           </div>
@@ -53,7 +53,7 @@
             <img src="/static/img/gengduo.png" class="img" />
             <div class="text">更多</div>
           </div>
-        </swiper-item> -->
+        </swiper-item>
       </swiper>
 
       <!-- 推荐歌单 方形 -->

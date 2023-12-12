@@ -101,7 +101,17 @@
         "navigationStyle": "custom"
       }
     }
-  ],
+      ,{
+            "path" : "pages/songlist_square/songlist_square",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false,
+                "navigationStyle": "custom"
+            }
+            
+        }
+    ],
   "globalStyle": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "uni-app",
@@ -127,7 +137,8 @@
       "van-circle": "/wxcomponents/@vant/weapp/circle/index",
       "van-swipe-cell": "/wxcomponents/@vant/weapp/swipe-cell/index",
       "van-sticky": "/wxcomponents/@vant/weapp/sticky/index",
-      "van-uploader": "/wxcomponents/@vant/weapp/uploader/index"
+      "van-uploader": "/wxcomponents/@vant/weapp/uploader/index",
+      "van-nav-bar": "/wxcomponents/@vant/weapp/nav-bar/index"
     }
   },
   "tabBar": {

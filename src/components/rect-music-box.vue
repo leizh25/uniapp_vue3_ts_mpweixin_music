@@ -21,7 +21,7 @@ import type { resource3_1 } from '@/api/index/type'
 
 const props = defineProps<{
   songList: resource3_1
-  showSlot: Boolean
+  showSlot?: Boolean
   to: String
 }>()
 onMounted(() => {

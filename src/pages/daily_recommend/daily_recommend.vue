@@ -2,7 +2,7 @@
   <div id="daily_rcmd">
     <!-- 标题栏 -->
     <div class="title_wrapper" :style="{ paddingTop: systemInfoStore.statusBarHeight + 'px', height: systemInfoStore.navigationBarHeight + 'px', backgroundColor: `rgba(255,255,255,${titleOpacity})` }">
-      <van-icon name="arrow-left" size="20" />
+      <van-icon name="arrow-left" size="20" @click="goBack"/>
       <div class="title" :style="{ width: systemInfoStore.custom?.width + 'px', height: systemInfoStore.custom?.height + 'px' }"><span class="text">每日推荐</span></div>
       <div class="zhanwei">　　</div>
     </div>
@@ -118,6 +118,9 @@ const openMenu = () => {
 }
 const closeActionSheet = () => {
   showActionSheet.value = false
+}
+const goBack = () => {
+  uni.navigateBack()
 }
 </script>
 
