@@ -116,7 +116,7 @@ const goSonglist = (id: number) => {
           top: 5px;
           right: 5px;
           // width: 50px;
-          padding: 0 10px;
+          padding: 0 5px;
           height: 15px;
           line-height: 15px;
           border-radius: 10px;

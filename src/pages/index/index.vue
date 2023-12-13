@@ -37,7 +37,7 @@
           </div>
         </swiper-item>
         <swiper-item>
-          <div class="item_box">
+          <div class="item_box" @click="goPage('rankings')">
             <img src="/static/img/paihangbang.png" class="img" />
             <div class="text">排行榜</div>
           </div>
@@ -227,18 +227,18 @@ const getBanners = async () => {
 onMounted(async () => {
   // await indexDataStore.init()
   uni.startPullDownRefresh({
-    success:() => {
+    success: () => {
       uni.stopPullDownRefresh()
     },
-    fail:() => {
-    Notify({ type: 'danger', message: '内容加载失败,请下拉刷新', safeAreaInsetTop: false, top: systemInfoStore.statusBarHeight })
-    }
+    fail: () => {
+      Notify({ type: 'danger', message: '内容加载失败,请下拉刷新', safeAreaInsetTop: false, top: systemInfoStore.statusBarHeight })
+    },
   })
   getBanners()
   // getRecommendSongList()
 })
 // 页面跳转
-const goPage = (pageName: string, param: any) => {
+const goPage = (pageName: string, param?: any) => {
   console.log('跳转页面: ', pageName)
   uni.navigateTo({
     url: `/pages/${pageName}/${pageName}`,

@@ -1,5 +1,6 @@
 import type { song } from '@/api/index/type'
 import type { SongDetailResponse } from '@/api/playing/type'
+import type { Ranking, RankingAbstract } from '@/api/rankings/type'
 import type { SonglistDetailResponse } from '@/api/songlist/type'
 // playing仓库类型定义
 export interface PlayingStore {
@@ -141,3 +142,8 @@ SDKVersion: '3.2.3'
   windowWidth: 375
 
 */
+
+export interface RankingsStore {
+  AllRankings: Ranking[]
+  AllRankingsAbstract: RankingAbstract[]
+}
