@@ -1,7 +1,7 @@
 <template>
   <div>
-    <van-nav-bar title="我喜欢的音乐" left-text="返回" left-arrow @click-left="goBack" fixed />
-    <scroll-view :scroll-y="true" style="padding-top: 90px;padding-bottom: 40px; height: 100%">
+    <van-nav-bar :title="title" left-text="返回" left-arrow @click-left="goBack" fixed />
+    <scroll-view :scroll-y="true" style="padding-top: 90px; padding-bottom: 40px; height: 100%">
       <!-- <div style="background: #f00; height: 90px">{{ songs }}</div> -->
       <div class="song_wrapper" v-for="item in songs" :key="item.id">
         <div class="left" :style="{ width: `calc(100% - ${item.mv ? '70px' : '35px'})` }" @click="playSong(item.id as number)">
@@ -27,15 +27,17 @@
       </div>
     </scroll-view>
     <bottomMusicBar></bottomMusicBar>
-    <van-action-sheet :show="showActionSheet" title="标题" @close="closeActionSheet">
+    <van-action-sheet :show="showActionSheet" title="菜单" @close="closeActionSheet">
+      <div>内容</div>
+      <div>内容</div>
       <div>内容</div>
     </van-action-sheet>
   </div>
 </template>
 <script lang="ts" setup>
 import { onLoad } from '@dcloudio/uni-app'
-import { reqLikelist } from '@/api/like'
-import type { LikeListResponse } from '@/api/like/type'
+import { reqLikelist, reqRecentSongs } from '@/api/like'
+import type { LikeListResponse, ListItem, RecentSongsResponse } from '@/api/like/type'
 import { useUserStore } from '@/stores/user'
 import { reqSongDetail } from '@/api/playing'
 import { reactive, ref } from 'vue'
@@ -47,10 +49,18 @@ import bottomMusicBar from '@/components/bottom-music-bar.vue'
 const userStore = useUserStore()
 const playingStore = usePlayingStore()
 const showActionSheet = ref<boolean>(false)
-
+let title = ref<string>('我喜欢的音乐')
 let songs = ref<song[]>([])
-onLoad(() => {
-  getData()
+// let recentSongs = ref<ListItem[]>([])
+onLoad((e: any) => {
+  console.log('type: ', e.type)
+  if (e.type === 'like') {
+    getData()
+    console.log('like')
+  } else {
+    title.value = '最近播放'
+    getRecent()
+  }
 })
 // 返回
 const goBack = () => {
@@ -62,7 +72,6 @@ const getData = async () => {
     const res: LikeListResponse = await reqLikelist(userStore.userinfo.profile.userId)
     if (res.code === 200) {
       const res2: SongDetailResponse = await reqSongDetail(res.ids.join(','))
-      console.log('res2: ', res2)
       if (res2.code === 200) {
         songs.value = res2.songs as song[]
       } else {
@@ -76,6 +85,15 @@ const getData = async () => {
         title: '网络不好',
         icon: 'none',
       })
+    }
+  } catch (error) {}
+}
+const getRecent = async () => {
+  try {
+    const res: RecentSongsResponse = await reqRecentSongs()
+    if (res.code === 200) {
+      // recentSongs.value = res.data.list
+      songs.value = res.data.list.map((item) => item.data)
     }
   } catch (error) {}
 }

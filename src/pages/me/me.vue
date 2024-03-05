@@ -25,7 +25,7 @@
       </div>
     </div>
     <div class="tool_wrapper">
-      <div class="tool_box">
+      <div class="tool_box" @click="goLike('recent')">
         <img class="img" src="/static/img/zuijinbofang.png" alt="" />
         <span class="text">最近播放</span>
       </div>
@@ -42,7 +42,7 @@
         <span class="text">更多</span>
       </div>
     </div>
-    <div class="my_like_wrapper" @click="goLike">
+    <div class="my_like_wrapper" @click="goLike('like')">
       <img src="/static/img/wodexihuan.png" class="img" />
       <div class="desc">
         <span class="text">我喜欢的音乐</span>
@@ -50,7 +50,6 @@
       </div>
     </div>
     <BottomMusicBar></BottomMusicBar>
-
   </div>
 </template>
 
@@ -80,9 +79,9 @@ onShow(() => {
   console.log('isLogin.value: ', isLogin.value)
 })
 //跳转喜欢的音乐
-const goLike = () => {
+const goLike = (type: string) => {
   uni.navigateTo({
-    url: '/pages/like/like'
+    url: '/pages/like/like?type=' + type,
   })
 }
 </script>
