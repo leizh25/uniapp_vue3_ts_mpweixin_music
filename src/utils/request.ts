@@ -1,4 +1,5 @@
-const baseURL = 'http://azzz.fun:8163'
+// const baseURL = 'http://azzz.fun:8163'
+const baseURL = 'http://127.0.0.1:3000'
 import { useUserStore } from '@/stores/user'
 // let retryCount: number = 3
 export const request = <T>(url: string, data?: any, method?: any, retryCount: number = 3): Promise<T> => {

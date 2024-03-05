@@ -77,8 +77,8 @@ const titleOpacity = ref<number>(0)
 const showActionSheet = ref<boolean>(false)
 onLoad(async () => {
   const res: RcmdSongsResponse = await reqRcmdSongs()
-  if (res.code == 302) {
-    await uni.navigateTo({
+  if (res.code == 301) {
+    await uni.redirectTo({
       url: '/pages/login/login',
     })
     Notify({ type: 'warning', message: '请先登录', top: systemInfoStore.statusBarHeight })

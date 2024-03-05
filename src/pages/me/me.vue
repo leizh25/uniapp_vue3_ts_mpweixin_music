@@ -42,7 +42,7 @@
         <span class="text">更多</span>
       </div>
     </div>
-    <div class="my_like_wrapper">
+    <div class="my_like_wrapper" @click="goLike">
       <img src="/static/img/wodexihuan.png" class="img" />
       <div class="desc">
         <span class="text">我喜欢的音乐</span>
@@ -79,6 +79,12 @@ onShow(() => {
   isLogin.value = JSON.stringify(userStore.userinfo) != '{}'
   console.log('isLogin.value: ', isLogin.value)
 })
+//跳转喜欢的音乐
+const goLike = () => {
+  uni.navigateTo({
+    url: '/pages/like/like'
+  })
+}
 </script>
 
 <style lang="less">

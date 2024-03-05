@@ -21,7 +21,7 @@ export const useUserStore = defineStore('user', {
         res = (await reqLogin(1, data)) as LoginResponse
       }
       //邮箱登录
-      if (type === 2) {
+      else {
         console.log(data)
         res = (await reqLogin(2, data)) as LoginResponse
       }

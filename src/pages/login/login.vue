@@ -1,4 +1,5 @@
 <template>
+  <van-nav-bar title="登录" left-text="返回" left-arrow @click-left="goBack" />
   <div class="login_wrapper">
     <div class="tab_wrapper">
       <van-tabs @change="change" animated>
@@ -154,7 +155,7 @@ const login = async () => {
     if (tabIdx.value == 0) {
       //验证验证码是否有误
 
-      const res1: VerifyCaptchaResponse = reqVerifyCaptcha(uphone.value, sms.value as number)
+      const res1: VerifyCaptchaResponse = await reqVerifyCaptcha(uphone.value, sms.value as number)
       console.log('验证验证码：', res1)
       if (res1.code !== 200) {
         Notify({ type: 'warning', message: res1.message as string, top: statusBarHeight })
@@ -184,6 +185,9 @@ const login = async () => {
     uni.switchTab({
       url: '/pages/me/me',
     })
+    //清除定时器
+    clearTimeout(timer1)
+    clearInterval(timer2)
   } catch (e: any) {
     // console.log('e: ', e)
     Notify({ message: e.message || '错误', top: statusBarHeight })
@@ -249,6 +253,11 @@ const validate = ({ smsFlag = true }) => {
     //执行返回
     resolve(true)
   })
+}
+
+//返回
+const goBack = () => {
+  uni.navigateBack()
 }
 </script>
 
