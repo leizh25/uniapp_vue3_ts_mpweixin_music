@@ -29,7 +29,7 @@
         <img class="img" src="/static/img/zuijinbofang.png" alt="" />
         <span class="text">最近播放</span>
       </div>
-      <div class="tool_box">
+      <div class="tool_box" @click="goLike('cloud')">
         <img class="img" src="/static/img/yunpan.png" alt="" />
         <span class="text">云盘</span>
       </div>
@@ -50,6 +50,7 @@
       </div>
     </div>
     <BottomMusicBar></BottomMusicBar>
+    <van-notify id="van-notify" />
   </div>
 </template>
 
@@ -58,7 +59,9 @@ import { ref, onMounted } from 'vue'
 import { useUserStore } from '@/stores/user'
 import { onShow } from '@dcloudio/uni-app'
 import BottomMusicBar from '@/components/bottom-music-bar.vue'
-
+import Notify from '@/wxcomponents/@vant/weapp/notify/notify'
+import { useSystemInfoStore } from '@/stores/systemInfo'
+const systemInfoStore = useSystemInfoStore()
 //用户信息
 const userStore = useUserStore()
 
@@ -80,6 +83,7 @@ onShow(() => {
 })
 //跳转喜欢的音乐
 const goLike = (type: string) => {
+  if (!isLogin.value) return Notify({ type: 'danger', message: '请先登录', top: systemInfoStore.statusBarHeight })
   uni.navigateTo({
     url: '/pages/like/like?type=' + type,
   })

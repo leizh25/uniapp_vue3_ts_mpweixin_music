@@ -36,8 +36,8 @@
 </template>
 <script lang="ts" setup>
 import { onLoad } from '@dcloudio/uni-app'
-import { reqLikelist, reqRecentSongs } from '@/api/like'
-import type { LikeListResponse, ListItem, RecentSongsResponse } from '@/api/like/type'
+import { reqCloudSongs, reqLikelist, reqRecentSongs } from '@/api/like'
+import type { CloudSongsResponse, LikeListResponse, ListItem, RecentSongsResponse } from '@/api/like/type'
 import { useUserStore } from '@/stores/user'
 import { reqSongDetail } from '@/api/playing'
 import { reactive, ref } from 'vue'
@@ -57,9 +57,12 @@ onLoad((e: any) => {
   if (e.type === 'like') {
     getData()
     console.log('like')
-  } else {
+  } else if (e.type === 'recent') {
     title.value = '最近播放'
     getRecent()
+  } else if (e.type === 'cloud') {
+    title.value = '云盘歌曲'
+    getCloud()
   }
 })
 // 返回
@@ -114,6 +117,14 @@ const openMenu = () => {
 }
 const closeActionSheet = () => {
   showActionSheet.value = false
+}
+const getCloud = async () => {
+  try {
+    const res: CloudSongsResponse = await reqCloudSongs()
+    if (res.code === 200) {
+      songs.value = res.data.map((item) => item.simpleSong)
+    }
+  } catch (error) {}
 }
 </script>
 <style lang="less">
