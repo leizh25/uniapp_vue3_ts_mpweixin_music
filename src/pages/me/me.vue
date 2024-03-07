@@ -25,28 +25,32 @@
       </div>
     </div>
     <div class="tool_wrapper">
-      <div class="tool_box" @click="goLike('recent')">
+      <div class="tool_box" @click="goLike('recent')" hover-class="hover">
         <img class="img" src="/static/img/zuijinbofang.png" alt="" />
-        <span class="text">最近播放</span>
+        <span class="text">最近音乐</span>
       </div>
-      <div class="tool_box" @click="goLike('cloud')">
+      <div class="tool_box" @click="goLike('cloud')" hover-class="hover">
         <img class="img" src="/static/img/yunpan.png" alt="" />
         <span class="text">云盘</span>
       </div>
-      <div class="tool_box">
+      <div class="tool_box" hover-class="hover" @click="goPage('recentvideo')">
         <img class="img" src="/static/img/shoucang.png" alt="" />
-        <span class="text">最近播放</span>
+        <span class="text">最近视频</span>
       </div>
-      <div class="tool_box">
+      <!-- <div class="tool_box">
         <img class="img" src="/static/img/gengduo.png" alt="" />
         <span class="text">更多</span>
-      </div>
+      </div> -->
     </div>
-    <div class="my_like_wrapper" @click="goLike('like')">
+    <div class="my_like_wrapper" @click="goLike('like')" hover-class="hover">
       <img src="/static/img/wodexihuan.png" class="img" />
-      <div class="desc">
-        <span class="text">我喜欢的音乐</span>
-        <span class="text">0首</span>
+      <div class="desc" style="width: 100%">
+        <!-- <span class="text">我喜欢的音乐</span> -->
+        <!-- <span class="text">0首</span> -->
+        <div class="text">
+          <span class="text1">我喜欢的音乐</span>
+          <span class="text1" style="float: right">></span>
+        </div>
       </div>
     </div>
     <BottomMusicBar></BottomMusicBar>
@@ -88,14 +92,23 @@ const goLike = (type: string) => {
     url: '/pages/like/like?type=' + type,
   })
 }
+const goPage = (type: string) => {
+  if (!isLogin.value) return Notify({ type: 'danger', message: '请先登录', top: systemInfoStore.statusBarHeight })
+  uni.navigateTo({
+    url: '/pages/' + type + '/' + type,
+  })
+}
 </script>
 
 <style lang="less">
+.hover {
+  background-color: #eee !important;
+}
 #me_app {
   height: 100vh;
   //   padding: 10px;
   box-sizing: border-box;
-  // padding-top: 30px;
+  padding-top: 50px;
   //   padding-top: var(--status-bar-height);
   background-color: #eee;
 
@@ -201,6 +214,7 @@ const goLike = (type: string) => {
     .tool_box {
       width: 80px;
       height: 80px;
+      border-radius: 10px;
       //   background-color: #fff;
       display: flex;
       flex-direction: column;

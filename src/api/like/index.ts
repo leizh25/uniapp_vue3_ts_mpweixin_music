@@ -1,10 +1,11 @@
 import { request } from '@/utils/request'
-import type { CloudSongsResponse, LikeListResponse, RecentSongsResponse } from './type'
+import type { CloudSongsResponse, LikeListResponse, RecentSongsResponse, RecentVideosResponse } from './type'
 
 enum API {
   LISTLIST = '/likelist?uid=',
   RECENT_SONGS = '/record/recent/song',
   CLOUD_SONGS = '/user/cloud',
+  RECENT_VIDEOS = '/record/recent/video',
 }
 
 //喜欢音乐列表接口
@@ -18,6 +19,12 @@ export const reqRecentSongs = () => request<RecentSongsResponse>(API.RECENT_SONG
 
 /**
  * 获取云盘歌曲的接口
- * @returns 
+ * @returns
  */
-export const reqCloudSongs = () => request<CloudSongsResponse>(API.CLOUD_SONGS) 
+export const reqCloudSongs = () => request<CloudSongsResponse>(API.CLOUD_SONGS)
+
+/**
+ * 获取最近视频的接口
+ * @returns
+ */
+export const reqRecentVideos = () => request<RecentVideosResponse>(API.RECENT_VIDEOS)

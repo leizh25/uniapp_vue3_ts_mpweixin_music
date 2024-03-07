@@ -142,6 +142,15 @@
     		"enablePullDownRefresh" : false,
 			"navigationStyle": "custom"
     	}
+    },
+    {
+    	"path" : "pages/recentvideo/recentvideo",
+    	"style" : 
+    	{
+    		"navigationBarTitleText" : "",
+    		"enablePullDownRefresh" : false,
+			"navigationStyle": "custom"
+    	}
     }
   ],
   "globalStyle": {

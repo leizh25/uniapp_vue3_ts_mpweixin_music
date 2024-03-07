@@ -3,7 +3,7 @@
     <van-nav-bar :title="title" left-text="返回" left-arrow @click-left="goBack" fixed />
     <scroll-view :scroll-y="true" style="padding-top: 90px; padding-bottom: 40px; height: 100%">
       <!-- <div style="background: #f00; height: 90px">{{ songs }}</div> -->
-      <div class="song_wrapper" v-for="item in songs" :key="item.id">
+      <div class="song_wrapper" v-for="item in songs" :key="item.id" hover-class="hover" >
         <div class="left" :style="{ width: `calc(100% - ${item.mv ? '70px' : '35px'})` }" @click="playSong(item.id as number)">
           <div class="img_box">
             <img :src="item.al?.picUrl" class="img" lazy-load />
@@ -128,6 +128,9 @@ const getCloud = async () => {
 }
 </script>
 <style lang="less">
+.hover {
+  background-color: #eee !important;
+}
 .song_wrapper {
   height: 60px;
   padding: 0 10px;
